@@ -1,0 +1,33 @@
+```asciidoc
+[No Mod:]
+NM1: Nini (Burst map) 5.71* 1953873
+NM2: Freedom dive Metal dimensions 5.77* 1915983
+NM3: Mizuoto to curtain 5.89* 2025942
+NM4: Last Goodbye 6.46* 1570203
+NM5: Airman 7.08* 104229
+
+[Long Maps:]
+LM1: Boku ga Namae o Yobu Hi feat.Mochizuki Souta  5.43* 1213586
+LM2: Image Material 5.58* 1408632
+LM3: Yomi Yori  5.76* 2190486
+
+[Free Mod:]
+FM1: Chika Chika 5.39* 1970829
+FM2: Ai no sukima 5.74* 1988753
+FM3: Yubi bouenkyou 5.80* 1474956
+
+[Double Time:]
+DT1: Doraemon 4.46* 1814702
+DT2: Let it snow 5.41* 1153526
+DT3: Yuki no Hana 6.23* 968350
+
+[Hidden:]
+HD1: Seventeen RPG 4.98* 719443
+HD2: Amazing Break 5.47* 1217004
+HD3: Colorful 6.00* 1947084
+
+[Relax:]
+RX1: Mou ii kai 6.87* 1695382
+RX2: Road of resistance 7.33* 869222
+RX3: Goodbye 8.36* 1172819
+```
