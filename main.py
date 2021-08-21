@@ -21,10 +21,15 @@ async def on_message(message):
     if message.content.startswith("$hello"):
         await message.channel.send("You're a nice guy")
 
+    # if message.content.startswith("$kc"):
+    #     player_list = message.content.split(" ")
+    #     kings_cup(player_list)
 
 
 
-def kings_cup()
+def kings_cup(player_list):
+    pass
+
 
 
 
