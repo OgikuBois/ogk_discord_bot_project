@@ -5,11 +5,11 @@ import tracemalloc
 import json 
 import youtube_dl
 import discord.ext 
+import math
+import random
 
 
 riot_dev_api = "RGAPI-c84aa054-6d1f-4943-8604-a000551e68e2"
-while(1):
-    print("IMASHA IS ***")
 
 
 #client = discord.Client()
@@ -37,6 +37,15 @@ async def hello(ctx):
 @client.command(pass_context = True)
 async def bad(ctx):
     await ctx.send("```No you```")
+
+@client.command(pass_context = True)
+async def gay(ctx):
+    await ctx.send("```{} is gay```".format(ctx.message.author))
+
+@client.command(pass_context = True)
+async def pp(ctx):
+    ppSize = random.randrange(1,16)
+    await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
 
 @client.command(pass_context = True)
 async def join(ctx):
