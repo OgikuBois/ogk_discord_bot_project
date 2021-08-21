@@ -1,15 +1,54 @@
 import random
-import urllib.request, json 
+from selenium import webdriver
+import time
+from selenium.webdriver.chrome.options import Options
 
-jsonreq=urllib.request.Request("https://raw.communitydragon.org/latest/cdragon/tft/en_au.json", headers={'User-Agent': 'Mozilla/5.0'})
 
-with urllib.request.urlopen(jsonreq) as url:
-    tftdata = json.loads(url.read().decode())
 
-    # print(str(tftdata['setData']))
-    for i in tftdata['setData'][5]['traits']:
-        print(i['name'])
+DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
+driver = webdriver.Chrome(executable_path=DRIVER_PATH)
+URL = "https://lolchess.gg/champions/set5.5/khazix"
+options = Options()
+options.headless = True
+options.add_argument("--window-size=1920,1200")
+options.add_argument('--ignore-certificate-errors')
+options.add_argument('--incognito')
 
+driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+driver.get(URL)
+time.sleep(5)
+drivertables = driver.find_element_by_css_selector("td")
+page_source = driver.page_source
+driver.quit()
+print(drivertables)
+
+
+
+
+
+
+
+
+# jsonreq=urllib.request.Request("https://raw.communitydragon.org/latest/cdragon/tft/en_au.json", headers={'User-Agent': 'Mozilla/5.0'})
+# with urllib.request.urlopen(jsonreq) as url:
+#     tftdata = json.loads(url.read().decode())
+# currentSet = 5
+# traits=[]
+# champLis=[]
+
+# def traitsGen():
+#     for i in tftdata['setData'][currentSet]['traits']:
+#         traits.append(i['name'])
+#     return traits
+
+    
+"""
+        #Testing the indexing into the depth of the JSON
+        
+        for i in tftdata['setData'][5]['traits']:
+            print(i['name'])
+        
+"""
 
 
 # #Origins
