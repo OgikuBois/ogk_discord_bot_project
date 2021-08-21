@@ -43,6 +43,14 @@ async def gay(ctx):
     await ctx.send("```{} is gay```".format(ctx.message.author))
 
 @client.command(pass_context = True)
+async def ayy(ctx):
+    await ctx.send("lmao")
+
+@client.command(pass_context = True)
+async def owc(ctx):
+    await ctx.send("owcComplete, owcList, owcClear")
+
+@client.command(pass_context = True)
 async def pp(ctx):
     ppSize = random.randrange(1,16)
     await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
