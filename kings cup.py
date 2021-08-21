@@ -1,9 +1,10 @@
+from io import DEFAULT_BUFFER_SIZE
 import random
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
-
-
+from bs4 import BeautifulSoup
+import pandas as pd
 
 DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(executable_path=DRIVER_PATH)
@@ -16,11 +17,13 @@ options.add_argument('--incognito')
 
 driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 driver.get(URL)
-time.sleep(5)
-drivertables = driver.find_element_by_css_selector("td")
+driver.implicitly_wait(5)
 page_source = driver.page_source
+soup = BeautifulSoup(driver.page_source, 'lxml')
+tables = soup.find_all('table')
+dfs = pd.read_html(str(tables))
 driver.quit()
-print(drivertables)
+print(dfs)
 
 
 
