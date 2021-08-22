@@ -1,14 +1,14 @@
 from io import DEFAULT_BUFFER_SIZE
 import random
 from selenium import webdriver
-import time
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import pandas as pd
+from collections import defaultdict
 
 DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
 driver = webdriver.Chrome(executable_path=DRIVER_PATH)
-URL = "https://lolchess.gg/champions/set5.5/khazix"
+URL = "https://lolchess.gg/champions/set5.5/Khazix"
 options = Options()
 options.headless = True
 options.add_argument("--window-size=1920,1200")
@@ -20,38 +20,51 @@ driver.get(URL)
 driver.implicitly_wait(5)
 page_source = driver.page_source
 soup = BeautifulSoup(driver.page_source, 'lxml')
-tables = soup.find_all('table')
+tables = soup.find_all("table",{"class":"guide-champion-table w-100"})
 dfs = pd.read_html(str(tables))
 driver.quit()
-print(dfs)
+
+
+legPool=[None] *len(dfs[0])
+originPool=[]
+classPool=[]
+
+
+for i in range(len(dfs[0])):
+    output=[]
+    output.append(dfs[0]['Champion'][i])
+    dsplit=dfs[0]['Origin'][i].split()
+    if len(dsplit)> 1:
+        output.append([dsplit[0], dsplit[1]])
+    else:
+        output.append(dfs[0]['Origin'][i])
+    dsplit=dfs[0]['Class'][i].split()
+    if len(dsplit)> 1:
+        output.append([dsplit[0], dsplit[1]])
+    else: 
+          output.append(dfs[0]['Class'][i])
+    legPool[i]=output
+
+for i in legPool:
+    if isinstance(i[1], list):
+        for x in i[1]:
+            if x not in originPool:
+                originPool.append(x)
+    else:
+        if i[1] not in originPool:
+                originPool.append(i[1])
+
+for i in legPool:
+    if isinstance(i[2], list):
+        for x in i[2]:
+            if x not in classPool:
+                classPool.append(x)
+    else:
+        if i[2] not in classPool:
+                classPool.append(i[2])
 
 
 
-
-
-
-
-
-# jsonreq=urllib.request.Request("https://raw.communitydragon.org/latest/cdragon/tft/en_au.json", headers={'User-Agent': 'Mozilla/5.0'})
-# with urllib.request.urlopen(jsonreq) as url:
-#     tftdata = json.loads(url.read().decode())
-# currentSet = 5
-# traits=[]
-# champLis=[]
-
-# def traitsGen():
-#     for i in tftdata['setData'][currentSet]['traits']:
-#         traits.append(i['name'])
-#     return traits
-
-    
-"""
-        #Testing the indexing into the depth of the JSON
-        
-        for i in tftdata['setData'][5]['traits']:
-            print(i['name'])
-        
-"""
 
 
 # #Origins

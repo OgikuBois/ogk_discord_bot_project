@@ -118,7 +118,7 @@ async def owcClear(ctx):
 @client.command(pass_context = True)
 async def covid(ctx):
     result = casesinfo.getCases()
-    await ctx.send("```" + result + "```")
+    await ctx.send("```" + result[0] +"\n" + result[1] + "```")
 #=======================================
 #Music Bot
 #========================================
