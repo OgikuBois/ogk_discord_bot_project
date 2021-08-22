@@ -4,11 +4,15 @@ import os
 import tracemalloc
 import json 
 import youtube_dl
+from youtube_dl import YoutubeDL
 import discord.ext 
 import math
 import random
-from casesinfo import *
-
+#from casesinfo import *
+import casesinfo
+from discord import FFmpegPCMAudio
+import discord.utils
+import asyncio
 
 riot_dev_api = "RGAPI-c84aa054-6d1f-4943-8604-a000551e68e2"
 
@@ -53,24 +57,6 @@ async def owc(ctx):
 async def pp(ctx):
     ppSize = random.randrange(1,16)
     await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
-
-@client.command(pass_context = True)
-async def join(ctx):
-    if ctx.author.voice:
-        channel = ctx.message.author.voice.channel
-        await channel.connect()
-    else:
-        ctx.send("```Please join a voice channel to user this command.```")
-
-@client.command(pass_context = True)
-async def dc(ctx):
-    if ctx.voice_client:
-
-        await ctx.guild.voice_client.disconnect()
-        await ctx.send("```Cya.```")
-
-    else:
-        await ctx.send("```I'm not in the call.```")
 
 @client.command(pass_context = True)
 async def owcComplete(ctx, owcMap):
@@ -126,15 +112,99 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
-#===================
-@client.command(pass_context = True)
-async def play(ctx, song):
-    await ctx.send("!play " + song)
-
 #========================
 @client.command(pass_context = True)
 async def covid(ctx):
+    result = casesinfo.getCases()
     await ctx.send("```" + result + "```")
+#=======================================
+#Music Bot
+#========================================
+ffmpeg_options = {
+    'options': '-vn'
+}
+
+ytdl_format_options = {
+'format': 'bestaudio',
+'postprocessors': [{
+    'key': 'FFmpegExtractAudio',
+    'preferredcodec': 'mp3',
+    'preferredquality': '192',
+}],
+'outtmpl': 'song.%(ext)s',
+}
+ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
+
+ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
+class YTDLSource(discord.PCMVolumeTransformer):
+    def __init__(self, source, *, data, volume=0.5):
+        super().__init__(source, volume)
+        self.data = data
+        self.title = data.get('title')
+        self.url = ""
+    @classmethod
+    async def from_url(cls, url, *, loop=None, stream=False):
+        loop = loop or asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+        if 'entries' in data:
+            # take first item from a playlist
+            data = data['entries'][0]
+        filename = data['title'] if stream else ytdl.prepare_filename(data)
+        return filename
+
+
+
+
+@client.command(pass_context = True)
+async def join(ctx):
+    if ctx.author.voice:
+        channel = ctx.message.author.voice.channel
+        await channel.connect()
+    else:
+        ctx.send("```Please join a voice channel to user this command.```")
+
+@client.command(pass_context = True)
+async def dc(ctx):
+    if ctx.voice_client:
+        await ctx.guild.voice_client.disconnect()
+        await ctx.send("```Cya.```")
+    else:
+        await ctx.send("```I'm not in the call.```")
+
+@client.command(pass_context = True)
+async def play(ctx, url):
+    try:
+        server = ctx.message.guild
+        voice_channel = server.voice_client
+        async with ctx.typing():
+            filename = await YTDLSource.from_url(url, loop=client.loop)
+            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+        await ctx.send('**Now playing:** {}'.format(filename))
+    except:
+            await ctx.send("The bot is not connected to a voice channel.")
+
+@client.command(name='pause', help='This command pauses the song')
+async def pause(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.pause()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
+    
+@client.command(name='resume', help='Resumes the song')
+async def resume(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_paused():
+        await voice_client.resume()
+    else:
+        await ctx.send("The bot was not playing anything before this. Use play_song command")
+@client.command(name='stop', help='Stops the song')
+async def stop(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.stop()
+    else:
+        await ctx.send("The bot is not playing anything at the moment.")
 
 
 #================
@@ -148,7 +218,7 @@ async def covid(ctx):
 #     if "ayy" in message.content.lower():
 #         storedMessage = message.content.lower()
 #         lmaoCounter = 0
-#         counter = 0
+#         counter = 0   
 #         for i in storedMessage:
 #             counter += 1
 #             if counter + 2 <= len(storedMessage):
