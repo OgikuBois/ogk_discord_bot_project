@@ -10,11 +10,12 @@ def getCases():
     # #DEBUG
     # print("Current time in Victoria: {}".format(current_time)
 
-    html_text = requests.get('https://www.coronavirus.vic.gov.au/victorian-coronavirus-covid-19-data').text
-    soup = BeautifulSoup(html_text, 'lxml')
-    cases = soup.find('div', class_ = 'ch-daily-update__statistics-item-text').text
-    last_time = soup.find('div', class_ = 'rpl-markup__inner').text
+    html_vic = requests.get('https://www.coronavirus.vic.gov.au/victorian-coronavirus-covid-19-data').text
+    soup = BeautifulSoup(html_vic, 'lxml')
+    casesMelb = soup.find('div', class_ = 'ch-daily-update__statistics-item-text').text
+    timeMelb = soup.find('div', class_ = 'rpl-markup__inner').text
 
-    result = (cases + " cases acquired in Victoria (last 24 hours) (" + last_time +")")
 
-    return result
+    melbResult = (casesMelb + " cases acquired in Victoria (last 24 hours) (" + timeMelb +")")
+    
+    return melbResult
