@@ -94,6 +94,11 @@ async def owcList(ctx):
     await ctx.send(rfd.read())
 
 @client.command(pass_context = True)
+async def IThinkItsTimeForOWC(ctx):
+    await ctx.send("I think you're right!")
+
+
+@client.command(pass_context = True)
 async def owcClear(ctx):
     with open("new_owc.txt") as f:
         with open("temp_owc.txt", "w") as f1:
