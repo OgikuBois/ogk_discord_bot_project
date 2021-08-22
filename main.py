@@ -7,13 +7,13 @@ import youtube_dl
 import discord.ext 
 import math
 import random
+from casesinfo import *
 
 
 riot_dev_api = "RGAPI-c84aa054-6d1f-4943-8604-a000551e68e2"
 
 
 #client = discord.Client()
-
 
 client = commands.Bot(command_prefix="$")
 
@@ -28,7 +28,6 @@ async def on_ready(pass_context = True):
 @client.command(pass_context = True)
 async def commands(ctx):
     await ctx.message.channel.send("```$hello | Displays a hello message.\n$play `{YouTube link or video name`} | Plays a provided song\n```")
-
 
 @client.command(pass_context = True)
 async def hello(ctx):
@@ -127,8 +126,15 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
+#===================
+@client.command(pass_context = True)
+async def play(ctx, song):
+    await ctx.send("!play " + song)
 
-
+#========================
+@client.command(pass_context = True)
+async def covid(ctx):
+    await ctx.send("```" + result + "```")
 
 
 #================
