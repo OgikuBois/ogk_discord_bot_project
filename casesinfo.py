@@ -14,7 +14,7 @@ def time_check():
     cock_content = cases_cock.readline()
     cases_cock.close() 
     timeDiff = now - datetime.strptime(cock_content, "%Y-%m-%d %H:%M:%S.%f")
-    if timeDiff > timedelta(hours=24):
+    if timeDiff > timedelta(hours=1):
         cases_peen = open("cases_cuh.txt", "w")   
         cases_peen.write(str(now))
         cases_peen.close()
@@ -48,10 +48,10 @@ def scrapeCases():
     return [melbResult, sydResult] # returns 2D array
 
 def mainCases():
-    if CovidCases.time_check():
-        cases = self.scrapeCases()
-        with open("cases_bruh.npy", "w") as f:
-            np.save(f ,cases)
+    if time_check():
+        cases = scrapeCases()
+        with open("cases_bruh", "wb") as f:
+            np.save(f , np.array(cases))
         return cases
     else:
-        return np.load("cases_bruh.npy") 
+        return np.load("cases_bruh") 
