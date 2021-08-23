@@ -1,4 +1,6 @@
+from datetime import time
 import discord
+from discord import message
 from discord.ext import commands,tasks
 import os 
 import tracemalloc
@@ -29,7 +31,9 @@ bot_token = fd.read()
 @client.event
 async def on_ready(pass_context = True):
     print('Logged on as {0}!'.format(client))
-
+#=======================================
+#Text response
+#========================================
 
 @client.command(pass_context = True)
 async def commands(ctx):
@@ -59,7 +63,9 @@ async def owc(ctx):
 async def pp(ctx):
     ppSize = random.randrange(1,16)
     await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
-
+#=======================================
+#OWC
+#========================================
 @client.command(pass_context = True)
 async def owcComplete(ctx, owcMap):
     ofd = open("new_owc.txt", "r+")
@@ -114,11 +120,60 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
-#========================
+#=======================================
+#Covid cases
+#========================================
 @client.command(pass_context = True)
 async def covid(ctx):
     result = casesinfo.getCases()
     await ctx.send("```" + result[0] +"\n" + result[1] + "```")
+#=======================================
+#Kings cup
+#========================================
+@client.command(pass_context = True)
+async def kc(ctx):
+    import kings_cup
+    author=ctx.message.author.id
+    authorName=str(ctx.message.author).split("#")
+    
+    validNumber=False
+    await ctx.send("```" + "How many players do you have " + authorName[0] + "?" + "```")
+    while validNumber==False:
+        try: 
+            message= await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=10)
+            try:
+                noOfPlayers = int(message.content.strip())
+                if noOfPlayers < 9 and noOfPlayers > 0:
+                    validNumber=True
+                else: 
+                    await ctx.send("``` Error: Please enter number between 1-8 ```")
+            except ValueError: 
+                await ctx.send("``` Error: Please enter number between 1-8 ```")
+        except asyncio.TimeoutError:
+                await ctx.channel.send("No input :(")
+                break
+    if validNumber:
+        playerList = []
+        while len(playerList) != noOfPlayers:
+            await ctx.send("```" + "Enter a player's name " + "```")
+            try:
+                message= await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=10)
+                try: 
+                    if isinstance(message.content, str):
+                        playerList.append(message.content)
+                except ValueError:
+                    await ctx.send("```Error: enter valid name```")
+            except asyncio.TimeoutError:
+                    await ctx.channel.send("No input :(")
+        await ctx.send(playerList)
+        # kcReturn=kings_cup.main(playerList)
+        # await ctx.send(kcReturn)
+
+# def check(origAuth, newAuth):
+#     print("Original Author: {} \nNew Author: {}".format(origAuth,newAuth))
+#     return origAuth == newAuth
+
+
 #=======================================
 #Music Bot
 #========================================
@@ -200,6 +255,7 @@ async def resume(ctx):
         await voice_client.resume()
     else:
         await ctx.send("The bot was not playing anything before this. Use play_song command")
+
 @client.command(name='stop', help='Stops the song')
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
@@ -209,26 +265,11 @@ async def stop(ctx):
         await ctx.send("The bot is not playing anything at the moment.")
 
 
-#================
-#Cilent
-#================
-# @client.event
-# async def on_message(message):
-#     print('Message from {0.author}: {0.content} in channel: {0.channel}'.format(message))
-#     message.content = message.content.lower()
 
-#     if "ayy" in message.content.lower():
-#         storedMessage = message.content.lower()
-#         lmaoCounter = 0
-#         counter = 0   
-#         for i in storedMessage:
-#             counter += 1
-#             if counter + 2 <= len(storedMessage):
-#                 if storedMessage[counter] == "a" and storedMessage[counter + 1] == "y" and storedMessage[counter + 2] == "y":
-#                     lmaoCounter = len(storedMessage) - 2 - counter 
-                   
-#         await message.channel.send("lmao" + "o" * lmaoCounter)
 """
+================
+Cilent
+================
 @client.event
 async def on_message(message):
     print('Message from {0.author}: {0.content} in channel: {0.channel}'.format(message))
@@ -246,16 +287,7 @@ async def on_message(message):
                    
         await message.channel.send("lmao" + "o" * lmaoCounter)
 
-
-    if message.content.startswith("$play"):
-        song = ""
-        messageContent = message.content.strip().split(" ")
-        for i in range(1, len(messageContent)):
-            song += messageContent[i] + " "
-        await message.channel.send("!play" + " " + song)
 """
-def kings_cup(player_list):
-    pass
 
 
 client.run(bot_token)
