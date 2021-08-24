@@ -43,7 +43,8 @@ def scrapeCases():
     page_source = driver.page_source
     soupS = BeautifulSoup(driver.page_source, 'lxml')
     casesSyd = soupS.find("p", {"id": "Number"}).text
-    sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)") 
+    sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
+    driver.close()
     driver.quit()
     return [melbResult, sydResult] # returns 2D array
 
