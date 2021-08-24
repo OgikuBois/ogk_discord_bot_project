@@ -4,15 +4,24 @@ from selenium.webdriver.chrome.options import Options
 import requests
 import pandas as pd
 import time
-from datetime import datetime
+from datetime import datetime, date, timedelta
+import datetime as dt
+import numpy as np
 
-def getCases():
-    # timeNowRaw = datetime.now(tz_victoria)
-    # current_time = timeNowRaw.strftime("%H:%M:%S")
+def time_check():
+    now = datetime.now()
+    cases_cock = open("cases_cuh.txt", "r")
+    cock_content = cases_cock.readline()
+    cases_cock.close() 
+    timeDiff = now - datetime.strptime(cock_content, "%Y-%m-%d %H:%M:%S.%f")
+    if timeDiff > timedelta(hours=1):
+        cases_peen = open("cases_cuh.txt", "w")   
+        cases_peen.write(str(now))
+        cases_peen.close()
+        return True
+    return False # return boolean based on difference
 
-    # #DEBUG
-    # print("Current time in Victoria: {}".format(current_time)
-
+def scrapeCases():
     html_vic = requests.get('https://www.coronavirus.vic.gov.au/victorian-coronavirus-covid-19-data').text
     soupM = BeautifulSoup(html_vic, 'lxml')
     casesMelb = soupM.find('div', class_ = 'ch-daily-update__statistics-item-text').text
@@ -34,7 +43,16 @@ def getCases():
     page_source = driver.page_source
     soupS = BeautifulSoup(driver.page_source, 'lxml')
     casesSyd = soupS.find("p", {"id": "Number"}).text
-    sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)") 
+    sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
+    driver.close()
     driver.quit()
-    
-    return [melbResult, sydResult]
+    return [melbResult, sydResult] # returns 2D array
+
+def mainCases():
+    if time_check():
+        cases = scrapeCases()
+        with open("cases_bruh", "wb") as f:
+            np.save(f , np.array(cases))
+        return cases
+    else:
+        return np.load("cases_bruh") 
