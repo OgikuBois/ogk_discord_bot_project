@@ -12,11 +12,13 @@ import math
 import random
 import casesinfo
 from discord import FFmpegPCMAudio
-import discord.utils
+import discord.utils 
 import asyncio
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
+from discord_components import DiscordComponents, Button, ButtonStyle, ComponentsBot, Select, SelectOption
+#pip install --upgrade discord-components
 
 riot_dev_api = "RGAPI-c84aa054-6d1f-4943-8604-a000551e68e2"
 
@@ -125,7 +127,49 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
+#===========================
+#Ready up check
+#===========================
+# @client.command(pass_context = True)
+# async def ready(ctx, game):
+#     players = []
+#     aaaaaa = game
+#     messageOutput = ""
+#     authorName = str(ctx.message.author).split("#")
+#     messageOutput += authorName[0]
+#     messageOutput = ("```prolog\n" + messageOutput + "```")
+#     await ctx.send(
+#         messageOutput,
+#         components = [
+#             [Button(label = "Ready Up", custom_id = "readyUpButton"), Button(label = "Unready", custom_id = "unreadyButton")]
+#         ]
+#     )
+#     interaction = await client.wait_for("button_click", check = lambda i: i.custom_id == "readyUpButton")
+#     await interaction.respond(content = "Button clicked!")
+
+@client.command(pass_context = True)
+async def ready(ctx, game):
+    players = []
+    aaaaaa = game
+    messageOutput = ""
+    readyUpButton = client.get_emoji(746348476241150023)
+    unreadyButton = client.get_emoji(283894246380142602)
+    reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
+#+ f"{readyUpButton}"
+
+    authorName = str(ctx.message.author).split("#")
+    messageOutput += authorName[0]
+    messageOutput = ("```prolog\n" + messageOutput + "```")
+    await ctx.send(
+        messageOutput 
+    )
+    for emoji in reactionEmojis:
+        await ctx.message.add_reaction(emoji)
 #=======================================
+
+
+
+# #=======================================
 #Covid cases
 #========================================
 @client.command(pass_context = True)
@@ -215,8 +259,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
             data = data['entries'][0]
         filename = data['title'] if stream else ytdl.prepare_filename(data)
         return filename
-
-
 
 
 @client.command(pass_context = True)
