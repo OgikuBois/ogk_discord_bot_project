@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import pandas as pd
-from collections import defaultdict
+from collections import Counter
 
 
 DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
@@ -30,6 +30,9 @@ driver.quit()
 legPool=[None] *len(dfs[0])
 originPool=[]
 classPool=[]
+originCount=[]
+classCount=[]
+
 
 for i in range(len(dfs[0])):
     output=[]
@@ -51,19 +54,33 @@ for i in legPool:
         for x in i[1]:
             if x not in originPool:
                 originPool.append(x)
+                originCount.append(x)
+            else:
+                originCount.append(x)
     else:
         if i[1] not in originPool:
-                originPool.append(i[1])
+            originPool.append(i[1])
+            originCount.append(i[1])
+        else:
+            originCount.append(i[1])
 
 for i in legPool:
     if isinstance(i[2], list):
         for x in i[2]:
             if x not in classPool:
                 classPool.append(x)
+                classCount.append(x)
+            else:
+                classCount.append(x)
     else:
         if i[2] not in classPool:
-                classPool.append(i[2])
+            classPool.append(i[2])
+            classCount.append(i[2])
+        else:
+            classCount.append(i[2])
 
+originCount=Counter(originCount)
+classCount=Counter(classCount)
 
 def originGen():
     maxlim=len(originPool)
@@ -75,72 +92,55 @@ def classGen():
     output=classPool[random.randrange(0,maxlim)]
     return output
 
+def findKing(trait, choice):
+    poss=[]
+    if choice ==1: 
+        for i in range(len(legPool)):
+            if trait in legPool[i][1]:
+                poss.append(legPool[i])
+            else:
+                pass
+
+    chance=random.randrange(0,len(poss))
+    output=poss[chance]
+    print(output)
+    return output
+
+
+
+
 def kingGen(lst):
     for i in lst:
+        poss=[]
         chance=random.randrange(1,3)
         if chance==1:
-            kingOut=originGen()
+            for j in range(len(legPool)):
+                if i[1] in legPool[j][1]:
+                    poss.append(legPool[j])
+                else:
+                    pass    
         elif chance==2:
-            kingOut=classGen()
-
-        
-        
+            for j in range(len(legPool)):
+                if i[2] in legPool[j][2]:
+                    poss.append(legPool[j])
+                else:
+                    pass
+        chance=random.randrange(0,len(poss))    
+        i.append(poss[chance][0])                
     return lst
 
 
 def main(lst):
     players=lst
     for i in range(len(players)):
-        players[i]=[players[i],originGen(),classGen()]
-    players=kingGen(players)         
-    # output=kingGen(lst)
-    print(players)
-    return
-
-main(["a","b","c","d"])
-# def whatIsMyKing(traitList):
-#     king = ""
-#     originOrClass = random.randrange(0,2)
-#     if z[0] != "":
-#         y = z
-#     if originOrClass == 0:
-#         originEnd = len(x) # no need to + 1 because of the name at pos 0
-#         kingNumber = random.randrange(1, originEnd)
-#         king = x[kingNumber]
-
-#     if originOrClass == 1:
-#         classEnd = len(y)
-#         kingNumber = random.randrange(1, classEnd)
-#         king = y[kingNumber]
-#     return king
-
-# #===========================================
-# # Main Game Function 
-# #===========================================
-# def main(player_list):
-    
-
-#     for player in player_list:
-        
-#         storedTraits = whatTraits()
-        
-        
-        
-#         Origin = storedTraits[0]
-#         Class = storedTraits[1]
-#         if len(storedTraits) >= 3:
-#             thirdOrigin = storedTraits[2]
-#         else:
-#             thirdOrigin = [""]
-
-#         if len(storedTraits) == 2: 
-#             print(player + ":", storedTraits[0], storedTraits[1] + "|| Your King Is:", whatIsMyKing(storedTraits) + "\n")
-        
-#         # Loop for 3 trait player statement
-#         else: 
-#             print(player + ":", storedTraits[0] + " " + storedTraits[1] + " " + storedTraits[2] + " || Your King Is:", whatIsMyKing(storedTraits) + "\n")
-
-
+        origin=originGen()
+        classs=classGen()
+        while originCount['{}'.format(origin)]+classCount['{}'.format(classs)]<7:
+            origin=originGen()
+            classs=classGen()
+        players[i]=[players[i],origin,classs]
+    players=kingGen(players)      
+    return players
 
 
 
