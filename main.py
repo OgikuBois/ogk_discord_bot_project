@@ -130,7 +130,7 @@ async def owcClear(ctx):
 #========================================
 @client.command(pass_context = True)
 async def covid(ctx):
-    result = casesinfo.getCases()
+    result = casesinfo.mainCases()
     await ctx.send("```" + result[0] +"\n" + result[1] + "```")
 #=======================================
 #Kings cup
@@ -170,9 +170,11 @@ async def kc(ctx):
                     await ctx.send("```Error: enter valid name```")
             except asyncio.TimeoutError:
                     await ctx.channel.send("No input :(")
-        await ctx.send(playerList)
-        # kcReturn=kings_cup.main(playerList)
-        # await ctx.send(kcReturn)
+        kcReturn=kings_cup.main(playerList)
+        msg_output=""
+        for i in kcReturn:
+            msg_output+="Player: " + str(i[0].capitalize()) + " has traits " + str(i[1]) +" and " + str(i[2]) +", and has a king of " + str(i[3]) + "\n"
+        await ctx.send("```prolog\n" + msg_output +"```")
 
 # def check(origAuth, newAuth):
 #     print("Original Author: {} \nNew Author: {}".format(origAuth,newAuth))

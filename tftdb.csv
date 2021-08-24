@@ -1,0 +1,58 @@
+,Champion,Cost,Origin,Class,Health,Armor,Attack Damage,Attack Range,Attack Speed,DPS,Skill,Mana
+0,Aatrox,1,Redeemed,Legionnaire,650,35,60,,0.65,39,,0/70
+1,Akshan,5,Sentinel,Ranger,850,35,80,,1.1,88,,60/120
+2,Aphelios,4,Nightbringer,Ranger,650,25,65,,0.85,55,,0/150
+3,Ashe,3,Draconic,Ranger,550,20,60,,0.75,45,,50/100
+4,Brand,2,Abomination,Spellweaver,600,20,45,,0.65,29,,0/20
+5,Diana,4,Nightbringer,Assassin,750,40,75,,0.7,53,,70/140
+6,Draven,4,Forgotten,Legionnaire,700,30,90,,0.75,68,,0/40
+7,Fiddlesticks,4,Abomination Revenant,Mystic,800,40,60,,0.75,45,,50/125
+8,Galio,4,Sentinel Draconic,Knight,1000,60,70,,0.6,42,,120/180
+9,Garen,5,Dawnbringer Victorious,Knight,1050,60,80,,0.75,60,,100/170
+10,Gragas,1,Dawnbringer,Brawler,750,40,50,,0.5,25,,40/70
+11,Gwen,5,Inanimate,Mystic,950,50,60,,0.9,54,,0/20
+12,Hecarim,2,Forgotten,Cavalier,750,45,55,,0.55,30,,75/125
+13,Heimerdinger,5,Draconic,Caretaker Renewer,800,30,45,,0.75,34,,0/140
+14,Irelia,2,Sentinel,Legionnaire Skirmisher,750,40,60,,0.8,48,,40/80
+15,Ivern,4,Revenant,Invoker Renewer,950,50,40,,0.75,30,,100/180
+16,Jax,4,Ironclad,Skirmisher,1000,50,80,,0.9,72,,0/20
+17,Kalista,1,Abomination,Legionnaire,500,15,60,,0.75,45,,0/120
+18,Karma,4,Dawnbringer,Invoker,700,25,45,,0.7,32,,0/50
+19,Kayle,5,Redeemed,Legionnaire,650,25,75,,1.1,83,,0/5
+20,Kennen,2,Hellion,Skirmisher,600,30,50,,0.7,35,,60/125
+21,Khazix,1,Dawnbringer,Assassin,500,25,55,,0.7,39,,0/60
+22,Kled,1,Hellion,Cavalier,400,30,65,,0.75,49,,-
+23,LeeSin,3,Nightbringer,Skirmisher,850,35,60,,0.75,45,,30/80
+24,Leona,1,Redeemed,Knight,700,40,80,,0.55,44,,40/80
+25,Lucian,4,Sentinel,Cannoneer,700,25,70,,0.75,53,,0/50
+26,Lulu,3,Hellion,Mystic,650,25,40,,0.7,28,,60/120
+27,Lux,3,Redeemed,Mystic,600,20,40,,0.6,24,,40/80
+28,MissFortune,3,Forgotten,Cannoneer,700,25,55,,0.8,44,,0/70
+29,Nautilus,2,Ironclad,Knight,750,45,80,,0.55,44,,50/120
+30,Nidalee,3,Dawnbringer,Skirmisher,800,35,50,,0.9,45,,0/60
+31,Nocturne,3,Revenant,Assassin,650,30,80,,0.85,68,,-
+32,Nunu,3,Abomination,Brawler,900,45,65,,0.55,36,,30/90
+33,Olaf,1,Sentinel,Skirmisher,650,35,65,,0.7,46,,-
+34,Poppy,1,Hellion,Knight,600,40,80,,0.55,44,,50/70
+35,Pyke,2,Sentinel,Assassin,650,30,50,,0.6,30,,60/120
+36,Rakan,3,Sentinel,Renewer,800,35,50,,0.6,30,,40/80
+37,Rell,4,Redeemed Ironclad,Cavalier,900,60,70,,0.6,42,,80/150
+38,Riven,3,Dawnbringer,Legionnaire,850,35,80,,0.8,64,,0/40
+39,Sejuani,2,Nightbringer,Cavalier Brawler,750,45,65,,0.55,36,,20/80
+40,Senna,1,Sentinel,Cannoneer,500,15,55,,0.7,39,,40/80
+41,Sett,2,Draconic,Brawler,750,40,70,,0.7,49,,0/50
+42,Soraka,2,Dawnbringer,Renewer,550,25,40,,0.6,24,,40/80
+43,Syndra,2,Redeemed,Invoker,600,20,40,,0.65,26,,50/90
+44,Teemo,5,Hellion,Cruel Invoker,800,30,65,,0.8,52,,30/60
+45,Thresh,2,Forgotten,Knight,800,40,75,,0.6,45,,40/80
+46,Tristana,2,Hellion,Cannoneer,550,20,60,,0.75,45,,50/125
+47,Udyr,1,Draconic,Skirmisher,700,30,55,,0.75,41,,30/40
+48,Varus,2,Redeemed,Ranger,600,20,65,,0.75,49,,0/60
+49,Vayne,1,Forgotten,Ranger,500,15,35,,0.8,28,,-
+50,Vel'koz,4,Redeemed,Spellweaver,700,25,45,,0.75,34,,0/80
+51,Viego,5,Forgotten,Assassin Skirmisher,1000,40,70,,1.0,70,,0/40
+52,Vladimir,1,Nightbringer,Renewer,650,35,45,,0.65,29,,0/80
+53,Volibear,5,Revenant,Brawler,1100,60,80,,0.65,52,,110/200
+54,Yasuo,3,Nightbringer,Legionnaire,800,35,60,,0.95,57,,0/40
+55,Ziggs,1,Hellion,Spellweaver,450,15,40,,0.75,30,,0/40
+56,Zyra,3,Draconic,Spellweaver,600,20,40,,0.7,28,,40/100
