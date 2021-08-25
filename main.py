@@ -150,7 +150,9 @@ async def owcClear(ctx):
 on_command = 0
 @client.command(pass_context = True)
 async def ready(ctx):
-    print("Ready")
+    channel = ctx.message.channel
+    await ctx.message.delete()
+    botReadyMessage = await channel.send("```I am ready. Tag a game.```")
     playersListComing = []
     playersListNotComing = []
     messageOutput = ""
@@ -182,10 +184,12 @@ async def ready(ctx):
     # while on_command == 1:
     while True:
         message = await client.wait_for('message')
-        channel = message.channel
+        channel = ctx.message.channel
         messageContentFirst = message.content.split(" ")
         messageContentFirst = messageContentFirst[0]
         print(messageContentFirst)
+        await botReadyMessage.delete()
+        await message.delete()
     #games list
         if messageContentFirst == "<@&752119026200739900>":
             gameID = "<@&752119026200739900>"
