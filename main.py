@@ -1,6 +1,7 @@
 from datetime import time
 import discord
 from discord import message
+from discord import reaction
 from discord.ext import commands,tasks
 import os 
 import tracemalloc
@@ -146,25 +147,184 @@ async def owcClear(ctx):
 #     )
 #     interaction = await client.wait_for("button_click", check = lambda i: i.custom_id == "readyUpButton")
 #     await interaction.respond(content = "Button clicked!")
-
+on_command = 0
 @client.command(pass_context = True)
-async def ready(ctx, game):
-    players = []
-    aaaaaa = game
+async def ready(ctx):
+    playersListComing = []
+    playersListNotComing = []
     messageOutput = ""
     readyUpButton = client.get_emoji(746348476241150023)
     unreadyButton = client.get_emoji(283894246380142602)
-    reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
-#+ f"{readyUpButton}"
+    # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
+    reactionEmojis = ["✅", "❌"]
+    gameID = ""
+    playerCounterComing = 1
+    playerCounterNotComing = 1
 
+#+ f"{readyUpButton}"
     authorName = str(ctx.message.author).split("#")
-    messageOutput += authorName[0]
-    messageOutput = ("```prolog\n" + messageOutput + "```")
-    await ctx.send(
-        messageOutput 
-    )
-    for emoji in reactionEmojis:
-        await ctx.message.add_reaction(emoji)
+    def reactionCheck(reaction, user):
+        return user and str(
+            reaction.emoji) in reactionEmojis
+
+    # if game.lower() == "val" or game.lower() == "valorant":
+    #         gameID = "<@&752119026200739900>"
+    # messageOutput +=  gameID + "\n"
+    # global on_command
+    # if on_command == 1:
+    #     await ctx.send("I am already ready")
+    #     return
+    on_command = 1
+    while on_command == 1:
+        message = await client.wait_for('message')
+        channel = message.channel
+        messageContentFirst = message.content.split(" ")
+        messageContentFirst = messageContentFirst[0]
+        print(messageContentFirst)
+    #games list
+        if messageContentFirst == "<@&752119026200739900>":
+            gameID = "<@&752119026200739900>"
+            gameName = "Valorant"
+        if messageContentFirst == "<@&754996624761290793>":
+            gameID = "<@&754996624761290793>"
+            gameName = "League Of Legends"
+        if messageContentFirst == "<@&879892248496603148>":
+            gameID = "<@&879892248496603148>"
+            gameName = "Osu"
+        if messageContentFirst == "<@&753916061161619486>":
+            gameID = "<@&753916061161619486>"
+            gameName = "Movie Night"
+        if messageContentFirst == "<@&767208151614619698>":
+            gameID = "<@&767208151614619698>"
+            gameName = "Phasmophobia"
+        if messageContentFirst == "<@&775135405099974706>":
+            gameID = "<@&775135405099974706>"
+            gameName = "Apex Legends"
+        if messageContentFirst == "<@&833563762514460672>":
+            gameID = "<@&833563762514460672>"
+            gameName = "Maplestory"
+        if messageContentFirst == "<@&866222623448498188>":
+            gameID = "<@&866222623448498188>"
+            gameName = "Dota"
+        if messageContentFirst == "<@&869413400948654120>":
+            gameID = "<@&869413400948654120>"
+            gameName = "Genshin Impact"
+        if messageContentFirst == "<@&874885896057540669>":
+            gameID = "<@&874885896057540669>"
+            gameName = "CSGO"
+        if messageContentFirst == "<@&872801512768823326>":
+            gameID = "<@&872801512768823326>"
+            gameName = "Prop Hunt"
+        
+
+    #send function
+        if gameID != "":
+            readyRunning = True
+            messageOutput = (
+                authorName[0] + " has started a ready check for: " + gameName + "\n" +
+                "players ready:" + "\n"
+        )
+            for i in playersListComing:
+                messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
+                playerCounterComing += 1
+                # botMessage = await ctx.send(gameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
+
+            messageOutput += "players not coming:" + "\n"
+
+            for i in playersListNotComing:
+                messageOutput += str(playerCounterNotComing) + ". " + i.capitalize() + "\n"
+                playerCounterNotComing += 1
+
+            messageOutput += "total number of players ready: " + str(playerCounterComing - 1)
+            messageOutput += "\n"
+            messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)            
+            messageOutput = (gameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
+
+            botMessage = await channel.send(messageOutput)
+            for i in range(len(reactionEmojis)):
+                await botMessage.add_reaction(reactionEmojis[i])
+            oldGameID = gameID
+            gameID = ""
+
+#add reaction interaction
+        updateList = 1
+
+        while readyRunning:
+            #List updater
+            if updateList == 1:
+                updateList = 0
+                try: 
+                    playersListNotComing.remove("Ogikubot")
+                except:
+                    pass
+                messageOutput = (
+                authorName[0] + " has started a ready check for: " + gameName + "\n" +
+                "players ready:" + "\n"
+                )
+                for i in playersListComing:
+                    messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
+                    playerCounterComing += 1
+                    # botMessage = await ctx.send(gameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
+
+                messageOutput += "players not coming:" + "\n"
+
+                for i in playersListNotComing:
+                    messageOutput += str(playerCounterNotComing) + ". " + i.capitalize() + "\n"
+                    playerCounterNotComing += 1
+                messageOutput += "total number of players ready: " + str(playerCounterComing - 1)
+                messageOutput += "\n"
+                messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)            
+                messageOutput = (oldGameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
+                await botMessage.edit(messageOutput)           
+            
+
+
+
+            reaction, user = await client.wait_for('reaction_add', check = reactionCheck)
+
+            if user != "OgikuBot#3742":
+                if str(reaction.emoji) == "✅":
+                    playerCounterComing = 1
+                    playerCounterNotComing = 1
+                    username = str(user)
+                    username = username.split("#")
+                    username = username[0]
+                    updateList = 1   
+                    if any(username in s for s in playersListComing):
+                        pass
+                    else:
+                        playersListComing.append(username)
+
+                    if any(username in s for s in playersListNotComing):
+                        playersListNotComing.remove(username)
+       
+            
+
+                if str(reaction.emoji) == "❌":
+                    playerCounterComing = 1
+                    playerCounterNotComing = 1
+                    username = str(user)
+                    username = username.split("#")
+                    username = username[0]
+                    updateList = 1 
+                    if any(username in s for s in playersListNotComing):
+                        pass
+                    else:
+                        playersListNotComing.append(username)
+                    if any(username in s for s in playersListComing):
+                        playersListComing.remove(username)
+
+#remove reaction interaction 
+
+
+
+        
+# on_command = 0
+
+
+            
+        # for emoji in reactionEmojis:
+        #     await ctx.message.add_reaction(emoji)
 #=======================================
 
 
