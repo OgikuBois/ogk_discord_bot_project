@@ -150,6 +150,7 @@ async def owcClear(ctx):
 on_command = 0
 @client.command(pass_context = True)
 async def ready(ctx):
+    print("Ready")
     playersListComing = []
     playersListNotComing = []
     messageOutput = ""
@@ -157,9 +158,12 @@ async def ready(ctx):
     unreadyButton = client.get_emoji(283894246380142602)
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
     reactionEmojis = ["✅", "❌"]
-    gameID = ""
+    # gameID = ""
+    # gameName = ""
+    # oldGameID = ""
     playerCounterComing = 1
     playerCounterNotComing = 1
+    delayCheck = False
 
 #+ f"{readyUpButton}"
     authorName = str(ctx.message.author).split("#")
@@ -175,7 +179,8 @@ async def ready(ctx):
     #     await ctx.send("I am already ready")
     #     return
     on_command = 1
-    while on_command == 1:
+    # while on_command == 1:
+    while True:
         message = await client.wait_for('message')
         channel = message.channel
         messageContentFirst = message.content.split(" ")
@@ -215,11 +220,8 @@ async def ready(ctx):
         if messageContentFirst == "<@&872801512768823326>":
             gameID = "<@&872801512768823326>"
             gameName = "Prop Hunt"
-        
-
     #send function
         if gameID != "":
-            readyRunning = True
             messageOutput = (
                 authorName[0] + " has started a ready check for: " + gameName + "\n" +
                 "players ready:" + "\n"
@@ -227,7 +229,6 @@ async def ready(ctx):
             for i in playersListComing:
                 messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
                 playerCounterComing += 1
-                # botMessage = await ctx.send(gameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
 
             messageOutput += "players not coming:" + "\n"
 
@@ -245,11 +246,11 @@ async def ready(ctx):
                 await botMessage.add_reaction(reactionEmojis[i])
             oldGameID = gameID
             gameID = ""
-
+            delayCheck = True
 #add reaction interaction
         updateList = 1
 
-        while readyRunning:
+        while delayCheck:
             #List updater
             if updateList == 1:
                 updateList = 0
@@ -257,6 +258,10 @@ async def ready(ctx):
                     playersListNotComing.remove("Ogikubot")
                 except:
                     pass
+                for i in playersListNotComing:
+                    if i == "Ogikubot":
+                        del playersListNotComing[i]
+
                 messageOutput = (
                 authorName[0] + " has started a ready check for: " + gameName + "\n" +
                 "players ready:" + "\n"
@@ -276,12 +281,9 @@ async def ready(ctx):
                 messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)            
                 messageOutput = (oldGameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
                 await botMessage.edit(messageOutput)           
-            
-
 
 
             reaction, user = await client.wait_for('reaction_add', check = reactionCheck)
-
             if user != "OgikuBot#3742":
                 if str(reaction.emoji) == "✅":
                     playerCounterComing = 1
