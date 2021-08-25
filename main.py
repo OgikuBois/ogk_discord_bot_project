@@ -148,7 +148,7 @@ async def owcClear(ctx):
 #     interaction = await client.wait_for("button_click", check = lambda i: i.custom_id == "readyUpButton")
 #     await interaction.respond(content = "Button clicked!")
 on_command = 0
-@client.command(pass_context = True)
+@client.command(pass_context = True, help='Type $ready, then enter @<game> with an optional note')
 async def ready(ctx):
     channel = ctx.message.channel
     await ctx.message.delete()
@@ -301,38 +301,42 @@ async def ready(ctx):
                 messageOutput = (oldGameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
                 await botMessage.edit(messageOutput)           
 
+            try:
+                reaction, user = await client.wait_for('reaction_add', check = reactionCheck, timeout = 60 * 5)
+                if user != "OgikuBot#3742":
+                    if str(reaction.emoji) == "✅":
+                        playerCounterComing = 1
+                        playerCounterNotComing = 1
+                        username = str(user)
+                        username = username.split("#")
+                        username = username[0]
+                        updateList = 1   
+                        if any(username in s for s in playersListComing):
+                            pass
+                        else:
+                            playersListComing.append(username)
 
-            reaction, user = await client.wait_for('reaction_add', check = reactionCheck)
-            if user != "OgikuBot#3742":
-                if str(reaction.emoji) == "✅":
-                    playerCounterComing = 1
-                    playerCounterNotComing = 1
-                    username = str(user)
-                    username = username.split("#")
-                    username = username[0]
-                    updateList = 1   
-                    if any(username in s for s in playersListComing):
-                        pass
-                    else:
-                        playersListComing.append(username)
+                        if any(username in s for s in playersListNotComing):
+                            playersListNotComing.remove(username)
 
-                    if any(username in s for s in playersListNotComing):
-                        playersListNotComing.remove(username)
-
-                if str(reaction.emoji) == "❌":
-                    playerCounterComing = 1
-                    playerCounterNotComing = 1
-                    username = str(user)
-                    username = username.split("#")
-                    username = username[0]
-                    updateList = 1 
-                    if any(username in s for s in playersListNotComing):
-                        pass
-                    else:
-                        playersListNotComing.append(username)
-                    if any(username in s for s in playersListComing):
-                        playersListComing.remove(username)
-
+                    if str(reaction.emoji) == "❌":
+                        playerCounterComing = 1
+                        playerCounterNotComing = 1
+                        username = str(user)
+                        username = username.split("#")
+                        username = username[0]
+                        updateList = 1 
+                        if any(username in s for s in playersListNotComing):
+                            pass
+                        else:
+                            playersListNotComing.append(username)
+                        if any(username in s for s in playersListComing):
+                            playersListComing.remove(username)
+            except asyncio.TimeoutError:
+                messageOutput += ("```prolog" + "\n" + "this " + gameName + " ready up check is already over.```")
+                await botMessage.edit(messageOutput) 
+                await channel.send("```prolog" + "\n" + gameName + " ready up check has now ended.```")
+                break
 #remove reaction interaction 
 
 
