@@ -158,7 +158,7 @@ async def ready(ctx):
     unreadyButton = client.get_emoji(283894246380142602)
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
     reactionEmojis = ["✅", "❌"]
-    # gameID = ""
+    gameID = ""
     # gameName = ""
     # oldGameID = ""
     playerCounterComing = 1
@@ -299,8 +299,6 @@ async def ready(ctx):
 
                     if any(username in s for s in playersListNotComing):
                         playersListNotComing.remove(username)
-       
-            
 
                 if str(reaction.emoji) == "❌":
                     playerCounterComing = 1
