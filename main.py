@@ -152,7 +152,7 @@ on_command = 0
 async def ready(ctx):
     channel = ctx.message.channel
     await ctx.message.delete()
-    botReadyMessage = await channel.send("```I am ready. Tag a game.```")
+    botReadyMessage = await channel.send("```I am ready. Tag a game and optionally write a note. For example: @Valorant quick we are starting in 2 minutes.```")
     playersListComing = []
     playersListNotComing = []
     messageOutput = ""
@@ -161,6 +161,7 @@ async def ready(ctx):
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
     reactionEmojis = ["✅", "❌"]
     gameID = ""
+    extra = ""
     # gameName = ""
     # oldGameID = ""
     playerCounterComing = 1
@@ -186,6 +187,7 @@ async def ready(ctx):
         message = await client.wait_for('message')
         channel = ctx.message.channel
         messageContentFirst = message.content.split(" ")
+        extra = messageContentFirst[1:]
         messageContentFirst = messageContentFirst[0]
         print(messageContentFirst)
         await botReadyMessage.delete()
@@ -227,9 +229,16 @@ async def ready(ctx):
     #send function
         if gameID != "":
             messageOutput = (
-                authorName[0] + " has started a ready check for: " + gameName + "\n" +
-                "players ready:" + "\n"
-        )
+                authorName[0] + " has started a ready check for: " + gameName + " |  additional notes: ")
+        
+            for i in extra:
+                try:
+                    i = i.capitalize()
+                except:
+                    pass
+                messageOutput += i + " "
+
+            messageOutput += ("\n" + "players ready:" + "\n")
             for i in playersListComing:
                 messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
                 playerCounterComing += 1
@@ -267,9 +276,15 @@ async def ready(ctx):
                         del playersListNotComing[i]
 
                 messageOutput = (
-                authorName[0] + " has started a ready check for: " + gameName + "\n" +
-                "players ready:" + "\n"
-                )
+                    authorName[0] + " has started a ready check for: " + gameName + " |  additional notes: ")
+            
+                for i in extra:
+                    try:
+                        i = i.capitalize()
+                    except:
+                        pass
+                    messageOutput += i + " "
+                messageOutput += ("\n" + "players ready:" + "\n")
                 for i in playersListComing:
                     messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
                     playerCounterComing += 1
