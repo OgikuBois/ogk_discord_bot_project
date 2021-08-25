@@ -271,8 +271,8 @@ async def ready(ctx):
                     playersListNotComing.remove("Ogikubot")
                 except:
                     pass
-                for i in playersListNotComing:
-                    if i == "Ogikubot":
+                for i in range(len(playersListNotComing)):
+                    if playersListNotComing[i] == "Ogikubot":
                         del playersListNotComing[i]
 
                 messageOutput = (
