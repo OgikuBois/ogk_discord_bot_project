@@ -229,7 +229,7 @@ async def ready(ctx):
     #send function
         if gameID != "":
             messageOutput = (
-                authorName[0] + " has started a ready check for: " + gameName + " |  additional notes: ")
+                authorName[0].capitalize() + " has started a ready check for: " + gameName + " |  additional notes: ")
         
             for i in extra:
                 try:
@@ -276,7 +276,7 @@ async def ready(ctx):
                         del playersListNotComing[i]
 
                 messageOutput = (
-                    authorName[0] + " has started a ready check for: " + gameName + " |  additional notes: ")
+                    authorName[0].capitalize() + " has started a ready check for: " + gameName + " |  additional notes: ")
             
                 for i in extra:
                     try:
