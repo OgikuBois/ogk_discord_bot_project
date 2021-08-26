@@ -160,6 +160,7 @@ async def ready(ctx):
     unreadyButton = client.get_emoji(283894246380142602)
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
     reactionEmojis = ["✅", "❌"]
+    # reactionEmojis = ["✅", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
     gameID = ""
     extra = ""
     # gameName = ""
@@ -260,9 +261,10 @@ async def ready(ctx):
             oldGameID = gameID
             gameID = ""
             delayCheck = True
+            
 #add reaction interaction
+        playersListComing.append(authorName[0])
         updateList = 1
-
         while delayCheck:
             #List updater
             if updateList == 1:
