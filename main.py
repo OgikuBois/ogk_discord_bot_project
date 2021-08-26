@@ -463,17 +463,17 @@ async def dc(ctx):
     else:
         await ctx.send("```I'm not in the call.```")
 
-@client.command(pass_context = True)
-async def play(ctx, url):
-    try:
-        server = ctx.message.guild
-        voice_channel = server.voice_client
-        async with ctx.typing():
-            filename = await YTDLSource.from_url(url, loop=client.loop)
-            voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
-        await ctx.send('**Now playing:** {}'.format(filename))
-    except:
-            await ctx.send("The bot is not connected to a voice channel.")
+# @client.command(pass_context = True)
+# async def play(ctx, url):
+#     try:
+#         server = ctx.message.guild
+#         voice_channel = server.voice_client
+#         async with ctx.typing():
+#             filename = await YTDLSource.from_url(url, loop=client.loop)
+#             voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+#         await ctx.send('**Now playing:** {}'.format(filename))
+#     except:
+#             await ctx.send("The bot is not connected to a voice channel.")
 
 @client.command(name='pause', help='This command pauses the song')
 async def pause(ctx):
@@ -502,7 +502,7 @@ async def stop(ctx):
 #Trial play
 #=====================
 @client.command()
-async def playyt(ctx, url):
+async def play(ctx, url):
     song_there = os.path.isfile("song.mp3")
     try:
         if song_there:
@@ -533,7 +533,7 @@ async def playyt(ctx, url):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    em1 = discord.Embed(title = "Now Listening Youtube Music", description = f'{url}\n\nPlease use %leave first to change music.\nMusic provided by {ctx.author.mention} <:_Paimon6:827074349450133524>',color = ctx.author.color)
+    em1 = discord.Embed(title = "Now Listening Youtube Music", description = f'{url}\n\nPlease use %leave first to change music.\nMusic provided by {ctx.message.author} <:_Paimon6:827074349450133524>',color = ctx.author.color)
 
     videoID = url.split("watch?v=")[1].split("&")[0]
 
