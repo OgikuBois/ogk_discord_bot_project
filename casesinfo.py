@@ -28,7 +28,7 @@ def scrapeCases():
     now = datetime.now()
     timeMelb = now.strftime("%B %d, %Y %H:%M:%S")
     melbResult = (casesMelb + " cases acquired in Victoria (last 24 hours) (Last updated " + timeMelb +")")
-    print(melbResult)
+    # print(melbResult)
 
     DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
     driver = webdriver.Chrome(executable_path=DRIVER_PATH)
