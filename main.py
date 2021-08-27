@@ -194,6 +194,14 @@ async def ready(ctx):
         await botReadyMessage.delete()
         await message.delete()
     #games list
+        gameIDList = ["<@&752119026200739900>", "<@&754996624761290793>", "<@&879892248496603148>", "<@&753916061161619486>", "<@&767208151614619698>", "<@&775135405099974706>", "<@&833563762514460672>", "<@&866222623448498188>", "<@&869413400948654120>", "<@&874885896057540669>", "<@&872801512768823326>"  ]
+        gameNameList = ["Valorant", "League Of Legends", "Osu", "Movie Night", "Phasmophobia", "Apex Legends", "Maplestory", "Dota", "Genshin Impact", "CSGO", "Prop Hunt"]
+        for i in range(len(gameIDList)):
+            if messageContentFirst == gameIDList[i]:
+                gameID = gameIDList[i] #I know this is redundant, but I want to make it very clear and obvious.
+                gameName = gameNameList[i]
+
+        """
         if messageContentFirst == "<@&752119026200739900>":
             gameID = "<@&752119026200739900>"
             gameName = "Valorant"
@@ -227,11 +235,12 @@ async def ready(ctx):
         if messageContentFirst == "<@&872801512768823326>":
             gameID = "<@&872801512768823326>"
             gameName = "Prop Hunt"
+        """
     #send function
         if gameID != "":
             await ctx.send(gameID)
             messageOutput = (
-                authorName[0].capitalize() + " has started a ready check for: " + gameName + " |  additional notes: ")
+                authorName[0].capitalize() + " has started a ready check for: " + gameName + " | additional notes: ")
         
             for i in extra:
                 try:
@@ -279,7 +288,7 @@ async def ready(ctx):
                         del playersListNotComing[i]
 
                 messageOutput = (
-                    authorName[0].capitalize() + " has started a ready check for: " + gameName + " |  additional notes: ")
+                    authorName[0].capitalize() + " has started a ready check for: " + gameName + " | additional notes: ")
             
                 for i in extra:
                     try:
