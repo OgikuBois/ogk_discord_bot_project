@@ -62,10 +62,17 @@ async def ayy(ctx):
 async def owc(ctx):
     await ctx.send("owcComplete, owcList, owcClear")
 
-@client.command(pass_context = True)
+@client.command(pass_context = True)   
 async def pp(ctx):
     ppSize = random.randrange(1,16)
-    await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
+    print(ctx.message.author)
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")
+    authorName = authorName[0]
+    if authorName == "Cryogenics":
+        await ctx.send("Cryogenics pp: 8======================================================================D")
+    else:
+        await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
 #=======================================
 #OWC
 #========================================
