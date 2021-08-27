@@ -62,10 +62,92 @@ async def ayy(ctx):
 async def owc(ctx):
     await ctx.send("owcComplete, owcList, owcClear")
 
+@client.command(pass_context = True)
+async def beef(ctx, *, badPerson):
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")
+    authorName = authorName[0]
+    badPerson = str(badPerson)
+    with open("beef.txt", "a") as fd:
+        fileInput = authorName.capitalize() + " has beef with: " + badPerson.capitalize()
+        fd.writelines(fileInput + "\n")
+        await ctx.send("```Done.```")
+    await beefList(ctx)
+
+@client.command(pass_context = True)
+async def beefList(ctx):
+    messageOutput = ""
+    with open("beef.txt", "r") as fd:
+        messageOutput = fd.read()
+        await ctx.send("```prolog" + "\n" + messageOutput + "```")
+
+@client.command(pass_context = True)
+async def beefRemove(ctx, badPerson):
+    messageOutput = ""
+    removalLine = 0
+    lineCounter = 0
+    badPersonStore = str(badPerson)
+    badPersonStore = badPersonStore
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")
+    authorName = authorName[0]
+    removeCheck = False
+
+    try:
+        authorName = authorName.split(" ")
+        authorName = authorName[0]
+    except:
+        pass
+ 
+    with open("beef.txt", "r+") as fd:
+        lines = fd.readlines()
+        linesList = []
+        for line in lines:  
+            lineCounter += 1
+            linesList.append(line)
+            lastWord = line.split(": ")
+            firstWord = lastWord[0].split(" ")
+            firstWord = firstWord[0]
+            lastWord = lastWord[-1].strip()
+            print(authorName.capitalize(), firstWord, badPersonStore.capitalize(), lastWord)
+
+            if authorName.capitalize() == firstWord and badPersonStore.capitalize() == lastWord:
+                print("True")
+                await ctx.send("``` Done. ```")
+                removalLine = lineCounter
+                removeCheck = True
+            else:
+                print("False")
+
+
+        print("Before: " + str(linesList))
+
+
+        if removeCheck == False:
+            await ctx.send("```Person's name was not recognised. Type the name at the end.```")
+
+        if removeCheck == True:
+            del linesList[removalLine - 1]
+        
+        print("After: " + str(linesList))
+
+        for i in range(len(linesList)):
+            messageOutput += str(linesList[i])
+    with open("beef.txt", "w+") as fd:
+        fd.write(messageOutput)
+    await beefList(ctx)
+
+        
+      
+
+        
+
+
+
+
 @client.command(pass_context = True)   
 async def pp(ctx):
     ppSize = random.randrange(1,16)
-    print(ctx.message.author)
     authorName = str(ctx.message.author)
     authorName = authorName.split("#")
     authorName = authorName[0]
