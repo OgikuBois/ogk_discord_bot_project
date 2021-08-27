@@ -1,33 +1,35 @@
 ```asciidoc
-[No Mod:]
-NM1: Nini (Burst map) 5.71* 1953873
-NM2: Freedom dive Metal dimensions 5.77* 1915983
-NM3: Mizuoto to curtain 5.89* 2025942
-NM4: Last Goodbye 6.46* 1570203
-NM5: Airman 7.08* 104229
+No Mod:
+NM1: Feint vagrant 5.35* 780914
+NM2: Sweet dreams 5.46* 1073963
+NM3: Ashes of the Dawn 5.51* 1713929
+NM4: Sing my pleasure 5.8* 3019026
+NM5: Vitamins 6.0*  3025039
+NM6: Union 6.26* 1919312
 
-[Long Maps:]
-LM1: Boku ga Namae o Yobu Hi feat.Mochizuki Souta  5.43* 1213586
-LM2: Image Material 5.58* 1408632
-LM3: Yomi Yori  5.76* 2190486
+Long Map:
+LM1: Song compilation I monstrata 5.1* 746471
+LM2: Kimi no shiranai monogatari 5.14* 651744
+LM3: Songs compilation I sotarks 5.84* 1554502
 
-[Free Mod:]
-FM1: Chika Chika 5.39* 1970829
-FM2: Ai no sukima 5.74* 1988753
-FM3: Yubi bouenkyou 5.80* 1474956
+Free Mod:
+FM1: Kakurenbo 5.05* 2422755
+FM2: Beat syncer 5.61* 2161926
+FM3: Monochrome butterfly 6.15* 1095854
 
-[Double Time:]
-DT1: Doraemon 4.46* 1814702
-DT2: Let it snow 5.41* 1153526
-DT3: Yuki no Hana 6.23* 968350
+Double Time:
+DT1: Gotoubun no Katachi 4.27* 2743486
+DT2: Cookie butter choco cookie 5.09* 1153237
+DT3: Setting sail, coming home 5.22* 283593
 
-[Hidden:]
-HD1: Seventeen RPG 4.98* 719443
-HD2: Amazing Break 5.47* 1217004
-HD3: Colorful 6.00* 1947084
+Hidden:
+HD1: Colorful 5.60* 1969122
+HD2: Army of the night 5.64* 2245373
+HD3: Colors Power ni omakasero 5.81* 2365443
 
-[Relax:]
-RX1: Mou ii kai 6.87* 1695382
-RX2: Road of resistance 7.33* 869222
-RX3: Goodbye 8.36* 1172819
+Relax:
+RX1: Black rover 7.01* 1655981
+RX2: Goodbye moonmen 10.06* 2827916
+RX3: Flamewall SOTARKS OMG 10.31* 3135149
+
 ```
