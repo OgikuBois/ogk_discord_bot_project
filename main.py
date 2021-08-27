@@ -82,7 +82,7 @@ async def beefList(ctx):
         await ctx.send("```prolog" + "\n" + messageOutput + "```")
 
 @client.command(pass_context = True)
-async def beefRemove(ctx, badPerson):
+async def beefRemove(ctx, *, badPerson):
     messageOutput = ""
     removalLine = 0
     lineCounter = 0
