@@ -30,7 +30,7 @@ def scrapeCases():
     melbResult = (casesMelb + " cases acquired in Victoria (last 24 hours) (Last updated: " + timeMelb +")")
 
     old = np.load("cases_bruh") 
-    print(old[0])
+    # print(old[0])
     DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
     driver = webdriver.Chrome(executable_path=DRIVER_PATH)
     URL = "https://nswdac-covid-19-postcode-heatmap.azurewebsites.net/Localcases.html"
@@ -47,7 +47,6 @@ def scrapeCases():
     soupS = BeautifulSoup(driver.page_source, 'lxml')
     casesSyd = soupS.find("p", {"id": "Number"}).text
     sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
-    driver.close()
     driver.quit()
     
     return [melbResult, sydResult] # returns 2D array
