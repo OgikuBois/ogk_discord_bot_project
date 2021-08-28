@@ -30,32 +30,30 @@ def scrapeCases():
     melbResult = (casesMelb + " cases acquired in Victoria (last 24 hours) (Last updated: " + timeMelb +")")
 
     old = np.load("cases_bruh") 
-    # print(old[0])
-    if melbResult != old[0]: # if melb cases equals prev cases skips sydney scrape (kind of shit condition but cant think of anything suggestions pls)
-        DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
-        driver = webdriver.Chrome(executable_path=DRIVER_PATH)
-        URL = "https://nswdac-covid-19-postcode-heatmap.azurewebsites.net/Localcases.html"
-        options = Options()
-        options.headless = True
-        options.add_argument("--window-size=1920,1200")
-        options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--incognito')
+    print(old[0])
+    DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
+    driver = webdriver.Chrome(executable_path=DRIVER_PATH)
+    URL = "https://nswdac-covid-19-postcode-heatmap.azurewebsites.net/Localcases.html"
+    options = Options()
+    options.headless = True
+    options.add_argument("--window-size=1920,1200")
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--incognito')
 
-        driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-        driver.get(URL)
-        driver.implicitly_wait(5)
-        page_source = driver.page_source
-        soupS = BeautifulSoup(driver.page_source, 'lxml')
-        casesSyd = soupS.find("p", {"id": "Number"}).text
-        sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
-        driver.close()
-        driver.quit()
-    else:
-        sydResult = old[1]
+    driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+    driver.get(URL)
+    driver.implicitly_wait(5)
+    page_source = driver.page_source
+    soupS = BeautifulSoup(driver.page_source, 'lxml')
+    casesSyd = soupS.find("p", {"id": "Number"}).text
+    sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
+    driver.close()
+    driver.quit()
+    
     return [melbResult, sydResult] # returns 2D array
 
 # time_check()
-# scrapeCases()
+scrapeCases()
 
 def mainCases():
     now = datetime.now()
