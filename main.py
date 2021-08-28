@@ -119,9 +119,7 @@ async def beefRemove(ctx, *, badPerson):
             else:
                 print("False")
 
-
         print("Before: " + str(linesList))
-
 
         if removeCheck == False:
             await ctx.send("```Person's name was not recognised. Type the name at the end.```")
@@ -136,14 +134,6 @@ async def beefRemove(ctx, *, badPerson):
     with open("beef.txt", "w+") as fd:
         fd.write(messageOutput)
     await beefList(ctx)
-
-        
-      
-
-        
-
-
-
 
 @client.command(pass_context = True)   
 async def pp(ctx):
@@ -252,6 +242,7 @@ async def ready(ctx):
     # reactionEmojis = ["✅", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
     gameID = ""
     extra = ""
+    message = ""
     # gameName = ""
     # oldGameID = ""
     playerCounterComing = 1
@@ -274,7 +265,10 @@ async def ready(ctx):
     on_command = 1
     # while on_command == 1:
     while True:
-        message = await client.wait_for('message')
+        try:
+            message = await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=60)
+        except asyncio.TimeoutError:
+            await ctx.send("```bruh you took too long to type something.```")
         channel = ctx.message.channel
         messageContentFirst = message.content.split(" ")
         extra = messageContentFirst[1:]
