@@ -187,7 +187,6 @@ async def owcList(ctx):
 async def IThinkItsTimeForOWC(ctx):
     await ctx.send("I think you're right!")
 
-
 @client.command(pass_context = True)
 async def owcClear(ctx):
     with open("new_owc.txt") as f:
@@ -207,6 +206,30 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
+
+@client.command(pass_context = True)
+async def genshinUpdate(ctx, *, whichLine):
+    messageOutput = ""
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")[0]
+    if whichLine == "1" or whichLine == "3" or whichLine == "5":
+        await ctx.send("```What is the updated number?```")
+    elif whichLine == "2" or whichLine  == "4":
+        await ctx.send("Done.")
+    elif whichLine == all:
+        pass
+    else: 
+        await ctx.send(".")
+    
+
+
+    with open("genshinPulls.txt", "r+") as fd:
+
+        lines = fd.readlines()
+        for line in lines:
+            messageOutput += line
+    await ctx.send("```prolog\n[" + authorName + "]\n" + messageOutput + "```")
+
 #===========================
 #Ready up check
 #===========================
@@ -239,7 +262,7 @@ async def ready(ctx):
     unreadyButton = client.get_emoji(283894246380142602)
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
     reactionEmojis = ["✅", "❌"]
-    # reactionEmojis = ["✅", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
+    reactionSpecialEmojis = ["✅", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
     gameID = ""
     extra = ""
     message = ""
@@ -349,8 +372,13 @@ async def ready(ctx):
             messageOutput = ("\n" + "```prolog" + "\n" + messageOutput + "```")
 
             botMessage = await channel.send(messageOutput)
-            for i in range(len(reactionEmojis)):
-                await botMessage.add_reaction(reactionEmojis[i])
+            easterEggRNG = random.randrange(0,11)
+            if easterEggRNG == 10:
+                for i in range(len(reactionSpecialEmojis)):
+                    await botMessage.add_reaction(reactionSpecialEmojis[i])
+            else:   
+                for i in range(len(reactionEmojis)):
+                    await botMessage.add_reaction(reactionEmojis[i])
             oldGameID = gameID
             gameID = ""
             delayCheck = True

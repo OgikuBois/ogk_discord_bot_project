@@ -1,0 +1,7 @@
+[Zee]
+1. character: 58/80
+2. guaranteed character: True
+3. weapon: 0/80 
+4. guaranteed weapon: False
+5. current primos: 5931
+6. summons: 37.1
