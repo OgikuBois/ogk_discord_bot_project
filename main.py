@@ -286,8 +286,6 @@ async def genshinUpdate(ctx, *, whichLine):
                 messageOutput += lineStore
             if lineCounter == 5:
                 doYourThing = False
-          
-    print(messageOutput)
  
     with open("genshinPulls.txt", "w+") as fd:
         fd.writelines(messageOutput)
