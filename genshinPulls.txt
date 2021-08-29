@@ -3,19 +3,13 @@
 2. guaranteed character: True
 3. weapon: 0/80 
 4. guaranteed weapon: False
-5. current primos: 1234 (2.00625 summons)
+5. current primos: 5000 (31.25 summons)
 [Cryogenics]
 1. character:     0/90
 2. guaranteed character:     False
 3. weapon:   36/80
 4. guaranteed weapon:    False
 5. current primos: 34135 (213.34375 summons)
-[sun]
-1. character: 58/90
-2. guaranteed character: True
-3. weapon: 0/80 
-4. guaranteed weapon: False
-5. current primos: 99999 (2.00625 summons)
 [frances]
 1. character: 3/90
 2. guaranteed character: True
@@ -28,15 +22,21 @@
 3. weapon: 0/80
 4. guaranteed weapon: False
 5. current primos: 7000 (43.75 summons)
-[Yippee]
-1. character: 69/90
-2. guaranteed character: True
-3. weapon: 69/80
-4. guaranteed weapon: False
-5. current primos: 6969696969696 (43560606060.6 summons)
 [MintMuffinz]
 1. character: 0/90
 2. guaranteed character: True
 3. weapon: 0/80
 4. guaranteed weapon: True
 5. current primos: 14866 (92.9125 summons)
+[sun]
+1. character: 0/90
+2. guaranteed character: True
+3. weapon: 0/80
+4. guaranteed weapon: False
+5. current primos: 19012 (118.825 summons)
+[Silent Knight]
+1. character: 16/90
+2. guaranteed character: False
+3. weapon: 0/80
+4. guaranteed weapon: False
+5. current primos: 13353 (83.45625 summons)
