@@ -1,7 +1,30 @@
-[Zee]
-1. character: 58/80
+[ZeloSama]
+1. character: 58/90
 2. guaranteed character: True
 3. weapon: 0/80 
 4. guaranteed weapon: False
-5. current primos: 5931
-6. summons: 37.1
+5. current primos: 1234 (2.00625 summons)
+[Cryogenics]
+1. character:    0/90
+2. guaranteed character:    False
+3. weapon:  36/80
+4. guaranteed weapon:   False
+5. current primos: 34075 (212.96875 summons)
+[sun]
+1. character: 58/90
+2. guaranteed character: True
+3. weapon: 0/80 
+4. guaranteed weapon: False
+5. current primos: 99999 (2.00625 summons)
+[frances]
+1. character: 3/90
+2. guaranteed character: True
+3. weapon: 5/80
+4. guaranteed weapon: True
+5. current primos: 5000 (31.25 summons)
+[imasha]
+1. character: 70/90
+2. guaranteed character: False
+3. weapon: 0/80
+4. guaranteed weapon: False
+5. current primos: 7000 (43.75 summons)

@@ -210,25 +210,152 @@ async def owcClear(ctx):
 @client.command(pass_context = True)
 async def genshinUpdate(ctx, *, whichLine):
     messageOutput = ""
+    times = 1
+    lineCounter = -1
     authorName = str(ctx.message.author)
     authorName = authorName.split("#")[0]
+    finisher = ""
+    doYourThing = False
+    lineStoreSecond = ""
     if whichLine == "1" or whichLine == "3" or whichLine == "5":
         await ctx.send("```What is the updated number?```")
+        if whichLine == "1":
+            finisher = "/90"
+        elif whichLine == "3":
+            finisher = "/80"      
+    
     elif whichLine == "2" or whichLine  == "4":
         await ctx.send("Done.")
-    elif whichLine == all:
-        pass
+    elif whichLine == "all":
+        times = 5
     else: 
-        await ctx.send(".")
-    
-
+        await ctx.send("```Invalid input.```")
 
     with open("genshinPulls.txt", "r+") as fd:
-
         lines = fd.readlines()
         for line in lines:
-            messageOutput += line
-    await ctx.send("```prolog\n[" + authorName + "]\n" + messageOutput + "```")
+            lineCounter += 1
+            lineStore = line
+            lineStoreFirst = lineStore.split(":")[0]
+            try:
+                lineStoreSecond = lineStore.split(":")[1] 
+            except:
+                pass
+        
+            if line[0] == "[":
+                nameChecker = line.split("[")[1].split("]")[0]
+      
+            if authorName.strip() == nameChecker.strip():
+                doYourThing = True
+                lineCounter = 0
+                nameChecker = ""
+
+            if doYourThing == True:
+                if whichLine == str(lineCounter):
+                    if lineCounter == 2 or lineCounter == 4:
+                        if lineStoreSecond.strip() == "False":
+                            lineStoreSecond = "True\n"
+                        else:
+                            lineStoreSecond = "False\n"
+                        lineStore = lineStoreFirst + ": " + lineStoreSecond
+
+                    else:
+                        try:
+                            print("Waiting.")
+                            message = await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout = 120)
+    
+                        except asyncio.TimeoutError:
+                            await ctx.send("```bruh you took too long to type something.```")
+        
+        
+                        if lineCounter == 5:
+                            quickMaths = float(message.content) / 160
+                            lineStore = lineStoreFirst + ": " + str(message.content) + " (" + str(quickMaths) + " summons)" + "\n"
+        
+                        else:
+                            lineStore = lineStoreFirst + ": " + str(message.content) + finisher + "\n"
+                else: 
+                    lineStore = lineStoreFirst + ": " + lineStoreSecond
+                    if lineCounter == 0:
+                        lineStore = lineStoreFirst
+
+                messageOutput += lineStore
+
+
+            if doYourThing == False:
+                messageOutput += lineStore
+            if lineCounter == 5:
+                doYourThing = False
+          
+    print(messageOutput)
+ 
+    with open("genshinPulls.txt", "w+") as fd:
+        fd.writelines(messageOutput)
+    await genshinStats(ctx)
+
+@client.command(pass_context = True)
+async def genshinStats(ctx):
+    with open("genshinPulls.txt", "r") as fd:
+        messageOutput = fd.read()
+        await ctx.send("```prolog" + "\n" + messageOutput + "```")
+
+@client.command(pass_context = True)
+async def genshinList(ctx):
+    with open("genshinPulls.txt", "r") as fd:
+        messageOutput = fd.read()
+        await ctx.send("```prolog" + "\n" + messageOutput + "```")
+
+@client.command(pass_context = True)
+async def genshinAdd(ctx):
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")[0]
+    messageOutput = ""
+    answered1 = True
+    answered2 = True
+
+    with open("genshinPulls.txt", "a") as fd:
+        messageOutput += "[" + authorName + "]\n"
+        await ctx.send("```What is your character banner pity?```")
+        message = await client.wait_for('message', check=lambda m: m.author == ctx.author)
+        messageOutput += "1. character: " + str(message.content) + "/90\n"
+    
+        while answered1:
+            await ctx.send("```Are you guaranteed a character? Answer True/False.```")
+            message = await client.wait_for('message', check=lambda m: m.author == ctx.author)
+            if str(message.content) == "True" or str(message.content) == "False":
+                messageOutput += "2. guaranteed character: " + str(message.content) + "\n"
+                answered1 = False
+                break
+            else:
+                await ctx.send("```Invalid input. Answer with either True/False.```")
+        
+        await ctx.send("```What is your weapon banner pity?```")
+        message = await client.wait_for('message', check=lambda m: m.author == ctx.author)
+        messageOutput += "3. weapon: " + str(message.content) + "/80\n"
+
+        while answered2:
+            await ctx.send("```Are you guaranteed a weapon? Answer True/False.```")
+            message = await client.wait_for('message', check=lambda m: m.author == ctx.author)
+            if str(message.content) == "True" or str(message.content) == "False":
+                messageOutput += "4. guaranteed weapon: " + str(message.content) + "\n"
+                answered1 = False
+                break
+            else:
+                await ctx.send("```Invalid input. Answer with either True/False.```")
+
+        await ctx.send("```How many primos do you have right now?```")
+        message = await client.wait_for('message', check=lambda m: m.author == ctx.author)
+        quickMaths = float(message.content) / 160
+        messageOutput += "5. current primos: " + str(message.content) + " (" + str(quickMaths) + " summons)\n"
+
+        fd.writelines(messageOutput)
+        await ctx.send("```Done.```")
+
+    await genshinStats(ctx)
+
+
+            
+
 
 #===========================
 #Ready up check

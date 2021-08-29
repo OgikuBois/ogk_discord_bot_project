@@ -1,0 +1,18 @@
+[ZeloSama]
+1. character:  58/90
+2. guaranteed character:  True
+3. weapon: 1/80
+4. guaranteed weapon:  False
+5. current primos:  1234 (2.00625 summons)
+[Cryogenics]
+1. character: 58/90
+2. guaranteed character: True
+3. weapon: 0/80 
+4. guaranteed weapon: False
+5. current primos: 56789 (2.00625 summons)
+[sun]
+1. character: 58/90
+2. guaranteed character: True
+3. weapon: 0/80 
+4. guaranteed weapon: False
+5. current primos: 99999 (2.00625 summons)
