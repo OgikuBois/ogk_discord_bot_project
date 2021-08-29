@@ -306,6 +306,33 @@ async def genshinList(ctx):
         await ctx.send("```prolog" + "\n" + messageOutput + "```")
 
 @client.command(pass_context = True)
+async def genshinPrimos(ctx, *, primosAdded):
+    with open("genshinPulls.txt", "r+") as fd:
+        lines = fd.readlines()
+        currentPrimos = 0
+        messageOutput = ""
+        for line in lines:
+            lineStore = line
+            if lineStore[0] == "5":
+                lineStoreFirst = lineStore.split(":")[0]
+                currentPrimos = lineStore.split(":")[1].split("(")[0]
+                currentPrimos = int(currentPrimos.strip())
+                currentPrimos = currentPrimos + int(primosAdded)
+                quickMaths = float(currentPrimos) /160
+                lineStore = lineStoreFirst + ": " + str(currentPrimos) + " (" + str(quickMaths) + " summons)\n"
+            messageOutput += lineStore
+
+    with open("genshinPulls.txt", "w+") as fd:
+        fd.writelines(messageOutput)
+    
+    await genshinStats(ctx)
+
+
+
+
+
+
+@client.command(pass_context = True)
 async def genshinAdd(ctx):
     authorName = str(ctx.message.author)
     authorName = authorName.split("#")[0]
