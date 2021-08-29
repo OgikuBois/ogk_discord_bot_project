@@ -52,7 +52,6 @@ def scrapeCases():
     return [melbResult, sydResult] # returns 2D array
 
 # time_check()
-scrapeCases()
 
 def mainCases():
     now = datetime.now()
