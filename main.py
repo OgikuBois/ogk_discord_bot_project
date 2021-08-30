@@ -144,7 +144,57 @@ async def pp(ctx):
     if authorName == "Cryogenics":
         await ctx.send("Cryogenics pp: 8======================================================================D")
     else:
-        await ctx.send("{}".format(ctx.message.author) + " pp: 8" + "=" * ppSize + "D")
+        await ctx.send("{}".format(authorName) + " pp: 8" + "=" * ppSize + "D")
+
+@client.command(pass_context = True)   
+async def shutUp(ctx):
+    beQuiet = True
+    authorName = ctx.message.author
+    print(str(authorName) + " called for shut up.")
+    print("I am ready to shut someone up.")
+    await ctx.message.delete()
+    message = await client.wait_for('message')
+    channel = message.channel
+    print("Currently shutting this person up: "+ str(message.author))
+    await channel.send("Shut up. I dare ya to speak gouma.")
+    print("Currently doing them dirty.")
+    while beQuiet:
+        try:
+            message = await client.wait_for('message', check=lambda m: m.author == message.author, timeout = 15)
+            channel = message.channel
+            await channel.send("Why you still talking?")
+        except asyncio.TimeoutError:
+            await channel.send("You may now speak ya gronk.")
+            beQuiet = False
+            break
+
+@client.command(pass_context = True)   
+async def shadowRealm(ctx, *, ripPerson):
+    await ctx.message.delete()
+    print(str(ctx.message.author) + ": $shadowRealm " + ripPerson)
+    await ctx.send(ripPerson + ". You have been sent to the shadow realm.")
+    inTheShadowRealm = True
+    messageOutput = "Banned person: " + str(ripPerson) + "\n"
+
+    while inTheShadowRealm:
+        try:
+            message = await client.wait_for('message', timeout = 30)
+            channel = message.channel
+            messageAuthor = str(message.author).split("#")[0]
+            if messageAuthor.strip() == ripPerson.strip():
+                await message.delete()
+                print(messageAuthor + " deleted message: " + message.content)
+                messageOutput += "Deleted message: " + message.content + "\n"
+                await channel.send("bruh why you trying to talk fam? You in the shadow realm.")
+        except asyncio.TimeoutError:
+            await channel.send("You free now.")
+            inTheShadowRealm = False
+            break
+        
+    if inTheShadowRealm == False:
+        with open("shadowRealmLogs.txt", "a") as fd:
+            fd.writelines(messageOutput)
+            
 #=======================================
 #OWC
 #========================================
@@ -293,15 +343,31 @@ async def genshinUpdate(ctx, *, whichLine):
 
 @client.command(pass_context = True)
 async def genshinStats(ctx):
+    channel = ctx.message.channel
     with open("genshinPulls.txt", "r") as fd:
-        messageOutput = fd.read()
-        await ctx.send("```prolog" + "\n" + messageOutput + "```")
+        messageOutput = fd.read()   
+        botMessage = await channel.send("```prolog" + "\n" + messageOutput + "```")
+        await asyncio.sleep(10)
+        await botMessage.delete()
 
 @client.command(pass_context = True)
 async def genshinList(ctx):
+    channel = ctx.message.channel
     with open("genshinPulls.txt", "r") as fd:
         messageOutput = fd.read()
-        await ctx.send("```prolog" + "\n" + messageOutput + "```")
+        botMessage = await channel.send("```prolog" + "\n" + messageOutput + "```")
+        await asyncio.sleep(10)
+        await botMessage.delete()
+    
+
+
+    # timeToSleep = True
+    # if timeToSleep == True:
+    #     print("bout to sleep")
+    #     time.sleep(10)
+    #     print("about to delete")
+    #     await botMessage.delete()
+    #     timeToSleep = False
 
 @client.command(pass_context = True)
 async def genshinPrimos(ctx, *, primosAdded):
@@ -439,7 +505,8 @@ async def ready(ctx):
     #     return
     on_command = 1
     # while on_command == 1:
-    while True:
+    oops = True
+    while oops:
         try:
             message = await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout=60)
         except asyncio.TimeoutError:
@@ -612,6 +679,7 @@ async def ready(ctx):
                 await botMessage.edit(messageOutput) 
                 await channel.send("```prolog" + "\n" + gameName + " ready up check has now ended.```")
                 break
+        oops = False
 #remove reaction interaction 
 
 
@@ -632,6 +700,7 @@ async def ready(ctx):
 #========================================
 @client.command(pass_context = True)
 async def covid(ctx):
+    print(str(ctx.message.author) +": $covid")
     result = casesinfo.mainCases()
     await ctx.send("```" + result[0] +"\n" + result[1] + "```")
 #=======================================
