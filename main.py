@@ -444,10 +444,6 @@ async def genshinAdd(ctx):
 
     await genshinStats(ctx)
 
-
-            
-
-
 #===========================
 #Ready up check
 #===========================
