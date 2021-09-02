@@ -21,3 +21,5 @@ Deleted message: mfkeer
 Banned person: owo
 Banned person: sun
 Deleted message: cool
+Banned person: OgikuBot
+Deleted message: ```Hello Cryogenics#4834```

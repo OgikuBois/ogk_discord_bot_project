@@ -350,14 +350,14 @@ async def genshinStats(ctx):
         await asyncio.sleep(10)
         await botMessage.delete()
 
-@client.command(pass_context = True)
+@client.command(pass_context = True, help = "$GenshinUpdate <line number>, add the line you want to update afterwards, e.g. $genshinUpdate 1.")
 async def genshinList(ctx):
     channel = ctx.message.channel
     with open("genshinPulls.txt", "r") as fd:
         messageOutput = fd.read()
         botMessage = await channel.send("```prolog" + "\n" + messageOutput + "```")
-        await asyncio.sleep(10)
-        await botMessage.delete()
+        # await asyncio.sleep(10)
+        # await botMessage.delete()
     
 
 
