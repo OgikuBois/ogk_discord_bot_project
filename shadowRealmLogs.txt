@@ -23,3 +23,6 @@ Banned person: sun
 Deleted message: cool
 Banned person: OgikuBot
 Deleted message: ```Hello Cryogenics#4834```
+Banned person: nuggets
+Deleted message: OI
+Deleted message: WHAT THE FK IS THIS

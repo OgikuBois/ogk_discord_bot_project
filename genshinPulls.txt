@@ -5,11 +5,11 @@
 4. guaranteed weapon: False
 5. current primos: 5120 (32.0 summons)
 [Cryogenics]
-1. character: 0/90
-2. guaranteed character: False
-3. weapon: 36/80
-4. guaranteed weapon: False
-5. current primos: 34255 (214.09375 summons)
+1. character:    17/90
+2. guaranteed character:  True
+3. weapon:   3/80
+4. guaranteed weapon:      False
+5. current primos: 2857 (17.85625 summons)
 [frances]
 1. character: 3/90
 2. guaranteed character: True

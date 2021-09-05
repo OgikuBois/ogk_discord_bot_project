@@ -40,7 +40,7 @@ async def on_ready(pass_context = True):
 
 @client.command(pass_context = True)
 async def commands(ctx):
-    await ctx.message.channel.send("```$hello | Displays a hello message.\n$play `{YouTube link or video name`} | Plays a provided song\n```")
+    await ctx.message.channel.send("```$hello | Displays a hello message.\n$play `{Yo   uTube link or video name`} | Plays a provided song\n```")
 
 @client.command(pass_context = True)
 async def hello(ctx):
@@ -61,6 +61,95 @@ async def ayy(ctx):
 @client.command(pass_context = True)
 async def owc(ctx):
     await ctx.send("owcComplete, owcList, owcClear")
+
+
+@client.command(pass_context = True)
+async def me(ctx, *, extra):
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")[0]
+    await ctx.message.delete()
+    await ctx.send("```\n" + authorName + " " + extra + "```")
+
+
+
+@client.command(pass_context = True)
+async def nCheck(ctx):
+    doItToEm = 0
+    testItToEm = 0
+    await ctx.message.delete()
+    isItTrue = True
+    while isItTrue:
+        message = await client.wait_for('message')
+        authorName = str(message.author)
+        authorName = authorName.split("#")[0]
+        channel = message.channel
+        print(authorName + ": " + str(message.content).strip().lower())
+        if str(message.content).strip().lower() == "nigger" or str(message.content).strip().lower() == "nigga" or str(message.content).strip().lower() == "niga":
+            doItToEm = 1
+        if str(message.content).strip().lower() == "test":
+            testItToEm = 1
+        if str(message.content).strip().lower() == "end":
+            isItTrue = False
+        if doItToEm == 1:
+            for i in range(0,5):
+                await channel.send(authorName + " said the N word!1!!1!1!111!!!")
+                doItToEm = 0
+        if testItToEm == 1:
+            for i in range(0,5):
+                await channel.send(authorName + " is testing the n word check.")
+                testItToEm = 0
+
+
+@client.command(pass_context = True)
+async def nFix(ctx):
+    await ctx.message.delete()
+    print("nFix is on")
+    fixIt = 0
+    nWordVariants = ["nigga", "nigger", "niggas", "niggers", "n4gga", "n4ggas", "negus", "n1gger", "n1ggers"]
+    iStore = 0
+    while True:
+        output = ""
+        message = await client.wait_for('message')
+        authorName = str(message.author)
+        authorName = authorName.split("#")[0]
+        channel = message.channel
+        messageStore = str(message.content).strip().lower().split(" ")
+        for j in nWordVariants:
+            if any(j in s for s in messageStore):
+                print(authorName + ":")
+                print(messageStore)
+                fixIt = 1
+                for i in range(len(messageStore)):
+                    # if any(j in s for s in messageStore[i]):
+                    if messageStore[i] == j:
+                        iStore = i
+                        
+        if fixIt == 1:
+            await message.delete()
+            messageStore[iStore] = "Kanye"
+            for i in range(len(messageStore)):
+                output += str(messageStore[i]) + " "
+            await channel.send("What " + authorName + " was meant to say was: " + output)
+            fixIt = 0
+
+
+@client.command(pass_context = True)
+async def roll(ctx):
+    rngRoll = random.randrange(0,101)
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")[0]
+    await ctx.send(authorName + " rolled: " + str(rngRoll))
+
+@client.command(pass_context = True)
+async def coin(ctx):
+    authorName = str(ctx.message.author)
+    authorName = authorName.split("#")[0]
+    rngCoin = random.randrange(0,2)
+    if rngCoin == 0:
+        output = "Heads"
+    if rngCoin == 1:
+        output = "Tails"
+    await ctx.send(authorName + " flipped a: " + output)
 
 @client.command(pass_context = True)
 async def beef(ctx, *, badPerson):
@@ -142,7 +231,7 @@ async def pp(ctx):
     authorName = authorName.split("#")
     authorName = authorName[0]
     if authorName == "Cryogenics":
-        await ctx.send("Cryogenics pp: 8======================================================================D")
+        await ctx.send("Cryogenics pp: 8" + "======================================================================" * ppSize + "D")
     else:
         await ctx.send("{}".format(authorName) + " pp: 8" + "=" * ppSize + "D")
 
@@ -311,7 +400,7 @@ async def genshinUpdate(ctx, *, whichLine):
 
                     else:
                         try:
-                            print("Waiting.")
+                            print("Genshin Update: Waiting.")
                             message = await client.wait_for('message', check=lambda m: m.author == ctx.author, timeout = 120)
     
                         except asyncio.TimeoutError:
@@ -515,8 +604,8 @@ async def ready(ctx):
         await botReadyMessage.delete()
         await message.delete()
     #games list
-        gameIDList = ["<@&752119026200739900>", "<@&754996624761290793>", "<@&879892248496603148>", "<@&753916061161619486>", "<@&767208151614619698>", "<@&775135405099974706>", "<@&833563762514460672>", "<@&866222623448498188>", "<@&869413400948654120>", "<@&874885896057540669>", "<@&872801512768823326>"  ]
-        gameNameList = ["Valorant", "League Of Legends", "Osu", "Movie Night", "Phasmophobia", "Apex Legends", "Maplestory", "Dota", "Genshin Impact", "CSGO", "Prop Hunt"]
+        gameIDList = ["<@&752119026200739900>", "<@&754996624761290793>", "<@&879892248496603148>", "<@&753916061161619486>", "<@&767208151614619698>", "<@&775135405099974706>", "<@&833563762514460672>", "<@&866222623448498188>", "<@&869413400948654120>", "<@&874885896057540669>", "<@&872801512768823326>", "pico"  ]
+        gameNameList = ["Valorant", "League Of Legends", "Osu", "Movie Night", "Phasmophobia", "Apex Legends", "Maplestory", "Dota", "Genshin Impact", "CSGO", "Prop Hunt", "Pico Park"]
         for i in range(len(gameIDList)):
             if messageContentFirst == gameIDList[i]:
                 gameID = gameIDList[i] #I know this is redundant, but I want to make it very clear and obvious.
@@ -675,7 +764,24 @@ async def ready(ctx):
                 await botMessage.edit(messageOutput) 
                 await channel.send("```prolog" + "\n" + gameName + " ready up check has now ended.```")
                 break
+        # print("Before try")
+        # try:
+        #     print("before message")
+        #     message = await client.wait_for('message', timeout = 60* 10)
+        #     print("after message")
+        #     if str(message.content) == "move":
+        #         for i in playersListComing:
+        #             await client.move_member(i, 199476909275348995)
+        # except asyncio.TimeoutError:
+        #     print("ready move ended")
         oops = False
+        
+# @client.command(pass_context = True)
+# async def move(ctx):
+#     playersListComing = ["Cryogenics"]
+#     for i in playersListComing:
+#         await ctx.move_to(199476909275348995)
+    
 #remove reaction interaction 
 
 
