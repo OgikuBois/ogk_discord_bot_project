@@ -3,40 +3,40 @@
 2. guaranteed character: True
 3. weapon: 0/80 
 4. guaranteed weapon: False
-5. current primos: 5120 (32.0 summons)
+5. current primos: 5370 (33.5625 summons)
 [Cryogenics]
 1. character:    17/90
 2. guaranteed character:  True
 3. weapon:   3/80
 4. guaranteed weapon:      False
-5. current primos: 2857 (17.85625 summons)
+5. current primos: 3107 (19.41875 summons)
 [frances]
 1. character: 3/90
 2. guaranteed character: True
 3. weapon: 5/80
 4. guaranteed weapon: True
-5. current primos: 5120 (32.0 summons)
+5. current primos: 5370 (33.5625 summons)
 [imasha]
 1. character: 70/90
 2. guaranteed character: False
 3. weapon: 0/80
 4. guaranteed weapon: False
-5. current primos: 7120 (44.5 summons)
+5. current primos: 7370 (46.0625 summons)
 [MintMuffinz]
 1. character: 0/90
 2. guaranteed character: True
 3. weapon: 0/80
 4. guaranteed weapon: True
-5. current primos: 14986 (93.6625 summons)
+5. current primos: 15236 (95.225 summons)
 [sun]
 1. character: 0/90
 2. guaranteed character: True
 3. weapon: 0/80
 4. guaranteed weapon: False
-5. current primos: 19132 (119.575 summons)
+5. current primos: 19382 (121.1375 summons)
 [Silent Knight]
 1. character:   16/90
 2. guaranteed character:   False
 3. weapon:   0/80
 4. guaranteed weapon:   False
-5. current primos: 14694 (91.8375 summons)
+5. current primos: 14944 (93.4 summons)

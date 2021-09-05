@@ -552,6 +552,7 @@ async def genshinAdd(ctx):
 #     )
 #     interaction = await client.wait_for("button_click", check = lambda i: i.custom_id == "readyUpButton")
 #     await interaction.respond(content = "Button clicked!")
+
 on_command = 0
 @client.command(pass_context = True, help='Type $ready, then enter @<game> with an optional note')
 async def ready(ctx):
@@ -560,12 +561,13 @@ async def ready(ctx):
     botReadyMessage = await channel.send("```I am ready. Tag a game and optionally write a note. For example: @Valorant quick we are starting in 2 minutes.```")
     playersListComing = []
     playersListNotComing = []
+    playersListLater = []
     messageOutput = ""
     readyUpButton = client.get_emoji(746348476241150023)
     unreadyButton = client.get_emoji(283894246380142602)
     # reactionEmojis = [":bwabwey:746348476241150023", ":SamSleeper:743015860662304808"]
-    reactionEmojis = ["✅", "❌"]
-    reactionSpecialEmojis = ["✅", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
+    reactionEmojis = ["✅", "🕐", "❌"]
+    reactionSpecialEmojis = ["✅", "🕐", "❌", "🍆", "💦", ":SamSleeper:743015860662304808"]
     gameID = ""
     extra = ""
     message = ""
@@ -573,6 +575,7 @@ async def ready(ctx):
     # oldGameID = ""
     playerCounterComing = 1
     playerCounterNotComing = 1
+    playerCounterLater = 1
     delayCheck = False
 
 #+ f"{readyUpButton}"
@@ -664,15 +667,22 @@ async def ready(ctx):
                 messageOutput += str(playerCounterComing) + ". " + i.capitalize() + "\n"
                 playerCounterComing += 1
 
+            messageOutput += ("players coming next game:" + "\n")
+            for i in playersListLater:
+                messageOutput += str(playerCounterLater) + ". " + i.capitalize() + "\n"
+                playerCounterLater += 1
+
             messageOutput += "players not coming:" + "\n"
 
             for i in playersListNotComing:
                 messageOutput += str(playerCounterNotComing) + ". " + i.capitalize() + "\n"
                 playerCounterNotComing += 1
 
+                
+
             messageOutput += "total number of players ready: " + str(playerCounterComing - 1)
             messageOutput += "\n"
-            messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)            
+            messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)     
             messageOutput = ("\n" + "```prolog" + "\n" + messageOutput + "```")
 
             botMessage = await channel.send(messageOutput)
@@ -717,6 +727,11 @@ async def ready(ctx):
                     playerCounterComing += 1
                     # botMessage = await ctx.send(gameID + "\n" + "```prolog" + "\n" + messageOutput + "```")
 
+                messageOutput += ("players coming next game:" + "\n")
+                for i in playersListLater:
+                    messageOutput += str(playerCounterLater) + ". " + i.capitalize() + "\n"
+                    playerCounterLater += 1
+
                 messageOutput += "players not coming:" + "\n"
 
                 for i in playersListNotComing:
@@ -734,6 +749,7 @@ async def ready(ctx):
                     if str(reaction.emoji) == "✅":
                         playerCounterComing = 1
                         playerCounterNotComing = 1
+                        playerCounterLater = 1
                         username = str(user)
                         username = username.split("#")
                         username = username[0]
@@ -745,10 +761,13 @@ async def ready(ctx):
 
                         if any(username in s for s in playersListNotComing):
                             playersListNotComing.remove(username)
+                        if any(username in s for s in playersListLater):
+                            playersListLater.remove(username)
 
                     if str(reaction.emoji) == "❌":
                         playerCounterComing = 1
                         playerCounterNotComing = 1
+                        playerCounterLater = 1
                         username = str(user)
                         username = username.split("#")
                         username = username[0]
@@ -759,6 +778,29 @@ async def ready(ctx):
                             playersListNotComing.append(username)
                         if any(username in s for s in playersListComing):
                             playersListComing.remove(username)
+                        if any(username in s for s in playersListLater):
+                            playersListLater.remove(username)
+
+                    if str(reaction.emoji) == "🕐":
+                        playerCounterComing = 1
+                        playerCounterNotComing = 1
+                        playerCounterLater = 1
+                        username = str(user)
+                        username = username.split("#")
+                        username = username[0]
+                        updateList = 1   
+                        if any(username in s for s in playersListComing):
+                            playersListComing.remove(username)
+                        if any(username in s for s in playersListNotComing):
+                            playersListNotComing.remove(username)
+                        if any(username in s for s in playersListLater):
+                            pass
+                        else:
+                            playersListLater.append(username)
+
+
+
+
             except asyncio.TimeoutError:
                 messageOutput += ("```prolog" + "\n" + "this " + gameName + " ready up check is already over.```")
                 await botMessage.edit(messageOutput) 
