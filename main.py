@@ -59,6 +59,33 @@ async def ayy(ctx):
     await ctx.send("lmao")
 
 @client.command(pass_context = True)
+async def ayyConstant(ctx):
+    print("ayyConstant is on")
+    await ctx.message.delete()
+    isItTrue = True
+    lenStore = 1
+    
+    while isItTrue:
+        message = await client.wait_for('message')
+        channel = message.channel
+        authorName = str(message.author).split("#")[0]
+        try:
+            messageStore = str(message.content).lower().split(" ")
+        except:
+            messageStore = str(message.content).lower()
+        if any("ayy" in s for s in messageStore):
+            print(authorName + ":")
+            print(messageStore) 
+            for i in range(len(messageStore)):
+                messageStoreI = messageStore[i]
+                for j in range(len(messageStoreI)):
+                    if j + 2 < len(messageStoreI):
+                        if messageStoreI[j] == "a" and messageStoreI[j + 1 ] == "y" and messageStoreI[j + 2] == "y":
+                            lenStore = len(messageStoreI) - j - 3
+            await channel.send("lmao" + lenStore * "o")
+
+
+@client.command(pass_context = True)
 async def owc(ctx):
     await ctx.send("owcComplete, owcList, owcClear")
 
@@ -70,7 +97,12 @@ async def me(ctx, *, extra):
     await ctx.message.delete()
     await ctx.send("```\n" + authorName + " " + extra + "```")
 
-
+@client.command(pass_context = True)
+async def spam(ctx, *, extra):
+    await ctx.message.delete()
+    for i in range(0,11):
+        botMessage = await ctx.send("Where are you " + extra)
+        await botMessage.delete()
 
 @client.command(pass_context = True)
 async def nCheck(ctx):
@@ -678,8 +710,6 @@ async def ready(ctx):
                 messageOutput += str(playerCounterNotComing) + ". " + i.capitalize() + "\n"
                 playerCounterNotComing += 1
 
-                
-
             messageOutput += "total number of players ready: " + str(playerCounterComing - 1)
             messageOutput += "\n"
             messageOutput += "total number of players not coming: " + str(playerCounterNotComing - 1)     
@@ -797,8 +827,6 @@ async def ready(ctx):
                             pass
                         else:
                             playersListLater.append(username)
-
-
 
 
             except asyncio.TimeoutError:
