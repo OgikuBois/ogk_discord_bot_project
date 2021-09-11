@@ -7,19 +7,28 @@ import time
 from datetime import datetime, date, timedelta
 import datetime as dt
 import numpy as np
+import pytz
 
 def time_check():
-    now = datetime.now()
+    now = dt.datetime.now()
+    melb_tz = pytz.timezone('Australia/Melbourne')
+    print(melb_tz)
     cases_cock = open("cases_cuh.txt", "r")
     cock_content = cases_cock.readline()
     cases_cock.close() 
-    timeDiff = now - datetime.strptime(cock_content, "%Y-%m-%d %H:%M:%S.%f")
-    if timeDiff > timedelta(minutes=15):
+    prevTime = datetime.strptime(cock_content, "%Y-%m-%d %H:%M:%S.%f%z")
+    now = melb_tz.localize(now)
+    # print(now)
+    # print(prevTime)
+    timeDiff = now - prevTime
+    if timeDiff > timedelta(minutes=10):
         cases_peen = open("cases_cuh.txt", "w")   
         cases_peen.write(str(now))
         cases_peen.close()
         return True
     return False # return boolean based on difference
+
+# time_check()
 
 def scrapeCases():
     html_vic = requests.get('https://www.coronavirus.vic.gov.au/').text
@@ -54,7 +63,6 @@ def scrapeCases():
 # time_check()
 
 def mainCases():
-    now = datetime.now()
     if time_check():
         cases = scrapeCases()
         with open("cases_bruh", "wb") as f:

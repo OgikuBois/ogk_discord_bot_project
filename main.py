@@ -12,6 +12,7 @@ import discord.ext
 import math
 import random
 import casesinfo
+import pytz
 from discord import FFmpegPCMAudio
 import discord.utils 
 import asyncio
