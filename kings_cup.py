@@ -9,16 +9,17 @@ import pandas as pd
 from collections import Counter
 
 
-DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
-driver = webdriver.Chrome(executable_path=DRIVER_PATH)
+#DRIVER_PATH = '/usr/local/bin/google-chrome'
+#driver = webdriver.Chrome(executable_path=DRIVER_PATH)
+
 URL = "https://lolchess.gg/champions/set5.5/Khazix"
 options = Options()
 options.headless = True
 options.add_argument("--window-size=1920,1200")
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--incognito')
-
-driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+driver = webdriver.Chrome(options=options)
+#driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 driver.get(URL)
 driver.implicitly_wait(5)
 page_source = driver.page_source
