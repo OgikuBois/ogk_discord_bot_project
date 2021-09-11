@@ -14,7 +14,7 @@ def time_check():
     cock_content = cases_cock.readline()
     cases_cock.close() 
     timeDiff = now - datetime.strptime(cock_content, "%Y-%m-%d %H:%M:%S.%f")
-    if timeDiff > timedelta(hours=1) and now.hour < 18:
+    if timeDiff > timedelta(minutes=15):
         cases_peen = open("cases_cuh.txt", "w")   
         cases_peen.write(str(now))
         cases_peen.close()
