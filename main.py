@@ -34,29 +34,15 @@ bot_token = fd.read()
 @client.event
 async def on_ready(pass_context = True):
     print('Logged on as {0}!'.format(client))
+
 #=======================================
 #Text response
 #========================================
 
-@client.command(pass_context = True)
-async def commands(ctx):
-    await ctx.message.channel.send("```$hello | Displays a hello message.\n$play `{Yo   uTube link or video name`} | Plays a provided song\n```")
-
+ 
 @client.command(pass_context = True)
 async def hello(ctx):
     await ctx.send("```Hello {}```".format(ctx.message.author))
-
-@client.command(pass_context = True)
-async def bad(ctx):
-    await ctx.send("```No you```")
-
-@client.command(pass_context = True)
-async def gay(ctx):
-    await ctx.send("```{} is gay```".format(ctx.message.author))
-
-@client.command(pass_context = True)
-async def ayy(ctx):
-    await ctx.send("lmao")
 
 @client.command(pass_context = True)
 async def ayyConstant(ctx):
@@ -105,39 +91,15 @@ async def spam(ctx, *, extra):
         await botMessage.delete()
 
 @client.command(pass_context = True)
-async def nCheck(ctx):
-    doItToEm = 0
-    testItToEm = 0
-    await ctx.message.delete()
-    isItTrue = True
-    while isItTrue:
-        message = await client.wait_for('message')
-        authorName = str(message.author)
-        authorName = authorName.split("#")[0]
-        channel = message.channel
-        print(authorName + ": " + str(message.content).strip().lower())
-        if str(message.content).strip().lower() == "nigger" or str(message.content).strip().lower() == "nigga" or str(message.content).strip().lower() == "niga":
-            doItToEm = 1
-        if str(message.content).strip().lower() == "test":
-            testItToEm = 1
-        if str(message.content).strip().lower() == "end":
-            isItTrue = False
-        if doItToEm == 1:
-            for i in range(0,5):
-                await channel.send(authorName + " said the N word!1!!1!1!111!!!")
-                doItToEm = 0
-        if testItToEm == 1:
-            for i in range(0,5):
-                await channel.send(authorName + " is testing the n word check.")
-                testItToEm = 0
-
-
-@client.command(pass_context = True)
 async def nFix(ctx):
     await ctx.message.delete()
     print("nFix is on")
     fixIt = 0
-    nWordVariants = ["nigga", "nigger", "niggas", "niggers", "n4gga", "n4ggas", "negus", "n1gger", "n1ggers"]
+    with open('n_word_variants.txt') as f:
+        nWordVariants = f.readline().strip().split(",")
+        print(nWordVariants)
+        
+    
     iStore = 0
     while True:
         output = ""
@@ -268,22 +230,22 @@ async def pp(ctx):
         await ctx.send("{}".format(authorName) + " pp: 8" + "=" * ppSize + "D")
 
 @client.command(pass_context = True)   
-async def shutUp(ctx):
+async def trapCard(ctx):
     beQuiet = True
     authorName = ctx.message.author
-    print(str(authorName) + " called for shut up.")
-    print("I am ready to shut someone up.")
+    print(str(authorName) + " Activated their trap card!")
+    print("I am ready to send someone to the shadow realm.")
     await ctx.message.delete()
     message = await client.wait_for('message')
     channel = message.channel
-    print("Currently shutting this person up: "+ str(message.author))
-    await channel.send("Shut up. I dare ya to speak gouma.")
-    print("Currently doing them dirty.")
+    print(str(message.author) + " Has activated " + authorName+"s trap card!" )
+    await channel.send("SILENCE! You have been banished to the shadow realm!")
+    print("Currently doin em dirty.")
     while beQuiet:
         try:
             message = await client.wait_for('message', check=lambda m: m.author == message.author, timeout = 15)
             channel = message.channel
-            await channel.send("Why you still talking?")
+            await channel.send("SILENCE FOOL")
         except asyncio.TimeoutError:
             await channel.send("You may now speak ya gronk.")
             beQuiet = False
@@ -377,7 +339,9 @@ async def owcClear(ctx):
     os.remove("temp_owc.txt")
     rfd = open("new_owc.txt", "r")
     await ctx.send(rfd.read())
-
+#=======================================
+#Genshin Commands
+#========================================
 @client.command(pass_context = True)
 async def genshinUpdate(ctx, *, whichLine):
     messageOutput = ""
@@ -477,18 +441,6 @@ async def genshinList(ctx):
     with open("genshinPulls.txt", "r") as fd:
         messageOutput = fd.read()
         botMessage = await channel.send("```prolog" + "\n" + messageOutput + "```")
-        # await asyncio.sleep(10)
-        # await botMessage.delete()
-    
-
-
-    # timeToSleep = True
-    # if timeToSleep == True:
-    #     print("bout to sleep")
-    #     time.sleep(10)
-    #     print("about to delete")
-    #     await botMessage.delete()
-    #     timeToSleep = False
 
 @client.command(pass_context = True)
 async def genshinPrimos(ctx, *, primosAdded):
@@ -565,26 +517,9 @@ async def genshinAdd(ctx):
 
     await genshinStats(ctx)
 
-#===========================
-#Ready up check
-#===========================
-# @client.command(pass_context = True)
-# async def ready(ctx, game):
-#     players = []
-#     aaaaaa = game
-#     messageOutput = ""
-#     authorName = str(ctx.message.author).split("#")
-#     messageOutput += authorName[0]
-#     messageOutput = ("```prolog\n" + messageOutput + "```")
-#     await ctx.send(
-#         messageOutput,
-#         components = [
-#             [Button(label = "Ready Up", custom_id = "readyUpButton"), Button(label = "Unready", custom_id = "unreadyButton")]
-#         ]
-#     )
-#     interaction = await client.wait_for("button_click", check = lambda i: i.custom_id == "readyUpButton")
-#     await interaction.respond(content = "Button clicked!")
-
+#=======================================
+#Game Ready command
+#========================================
 on_command = 0
 @client.command(pass_context = True, help='Type $ready, then enter @<game> with an optional note')
 async def ready(ctx):
@@ -616,15 +551,7 @@ async def ready(ctx):
         return user and str(
             reaction.emoji) in reactionEmojis
 
-    # if game.lower() == "val" or game.lower() == "valorant":
-    #         gameID = "<@&752119026200739900>"
-    # messageOutput +=  gameID + "\n"
-    # global on_command
-    # if on_command == 1:
-    #     await ctx.send("I am already ready")
-    #     return
     on_command = 1
-    # while on_command == 1:
     oops = True
     while oops:
         try:
@@ -646,41 +573,6 @@ async def ready(ctx):
                 gameID = gameIDList[i] #I know this is redundant, but I want to make it very clear and obvious.
                 gameName = gameNameList[i]
 
-        """
-        if messageContentFirst == "<@&752119026200739900>":
-            gameID = "<@&752119026200739900>"
-            gameName = "Valorant"
-        if messageContentFirst == "<@&754996624761290793>":
-            gameID = "<@&754996624761290793>"
-            gameName = "League Of Legends"
-        if messageContentFirst == "<@&879892248496603148>":
-            gameID = "<@&879892248496603148>"
-            gameName = "Osu"
-        if messageContentFirst == "<@&753916061161619486>":
-            gameID = "<@&753916061161619486>"
-            gameName = "Movie Night"
-        if messageContentFirst == "<@&767208151614619698>":
-            gameID = "<@&767208151614619698>"
-            gameName = "Phasmophobia"
-        if messageContentFirst == "<@&775135405099974706>":
-            gameID = "<@&775135405099974706>"
-            gameName = "Apex Legends"
-        if messageContentFirst == "<@&833563762514460672>":
-            gameID = "<@&833563762514460672>"
-            gameName = "Maplestory"
-        if messageContentFirst == "<@&866222623448498188>":
-            gameID = "<@&866222623448498188>"
-            gameName = "Dota"
-        if messageContentFirst == "<@&869413400948654120>":
-            gameID = "<@&869413400948654120>"
-            gameName = "Genshin Impact"
-        if messageContentFirst == "<@&874885896057540669>":
-            gameID = "<@&874885896057540669>"
-            gameName = "CSGO"
-        if messageContentFirst == "<@&872801512768823326>":
-            gameID = "<@&872801512768823326>"
-            gameName = "Prop Hunt"
-        """
     #send function
         if gameID != "":
             await ctx.send(gameID)
@@ -834,50 +726,24 @@ async def ready(ctx):
                 await botMessage.edit(messageOutput) 
                 await channel.send("```prolog" + "\n" + gameName + " ready up check has now ended.```")
                 break
-        # print("Before try")
-        # try:
-        #     print("before message")
-        #     message = await client.wait_for('message', timeout = 60* 10)
-        #     print("after message")
-        #     if str(message.content) == "move":
-        #         for i in playersListComing:
-        #             await client.move_member(i, 199476909275348995)
-        # except asyncio.TimeoutError:
-        #     print("ready move ended")
         oops = False
         
-# @client.command(pass_context = True)
-# async def move(ctx):
-#     playersListComing = ["Cryogenics"]
-#     for i in playersListComing:
-#         await ctx.move_to(199476909275348995)
-    
-#remove reaction interaction 
 
 
-
-        
-# on_command = 0
-
-
-            
-        # for emoji in reactionEmojis:
-        #     await ctx.message.add_reaction(emoji)
-#=======================================
-
-
-
-# #=======================================
+#========================================
 #Covid cases
 #========================================
+
 @client.command(pass_context = True)
 async def covid(ctx):
     print(str(ctx.message.author) +": $covid")
     result = casesinfo.mainCases()
     await ctx.send("```" + result[0] +"\n" + result[1] + "```")
-#=======================================
+
+#========================================
 #Kings cup
 #========================================
+
 @client.command(pass_context = True)
 async def kc(ctx):
     import kings_cup
@@ -919,14 +785,10 @@ async def kc(ctx):
             msg_output+="Player: " + str(i[0].capitalize()) + " has traits " + str(i[1]) +" and " + str(i[2]) +", and has a king of " + str(i[3]) + "\n"
         await ctx.send("```prolog\n" + msg_output +"```")
 
-# def check(origAuth, newAuth):
-#     print("Original Author: {} \nNew Author: {}".format(origAuth,newAuth))
-#     return origAuth == newAuth
-
-
-#=======================================
+#========================================
 #Music Bot
 #========================================
+
 ffmpeg_options = {
     'options': '-vn'
 }
