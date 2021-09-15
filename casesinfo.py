@@ -42,7 +42,7 @@ def scrapeCases():
     # print(old[0])
     # DRIVER_PATH = 'C:\Program Files (x86)\chromedriver.exe'
     # driver = webdriver.Chrome(executable_path=DRIVER_PATH)
-    URL = "https://nswdac-covid-19-postcode-heatmap.azurewebsites.net/Localcases.html"
+    URL = "https://www.health.nsw.gov.au/Infectious/covid-19/Pages/default.aspx"
     options = Options()
     options.headless = True
     options.add_argument("--window-size=1920,1200")
@@ -55,7 +55,7 @@ def scrapeCases():
     driver.implicitly_wait(5)
     page_source = driver.page_source
     soupS = BeautifulSoup(driver.page_source, 'lxml')
-    casesSyd = soupS.find("p", {"id": "Number"}).text
+    casesSyd = soupS.find_all("span", {"class": "number"})[3].text
     sydResult = (casesSyd + " cases acquired in NSW (last 24 hours)")
     driver.quit()
     
