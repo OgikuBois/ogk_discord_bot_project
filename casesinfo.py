@@ -33,7 +33,7 @@ def scrapeCases():
     casesMelb = soupM.find_all('div', class_ = 'ch-daily-update__statistics-item-text')[3].text
     vaxProgressText = soupM.find_all('div', class_ = 'ch-daily-update__statistics-item-text')[2].text
     vaxProgress = vaxProgressText.strip('%')
-    fillCount = int(float(vaxProgress)) / 70 * 20
+    fillCount = float(vaxProgress) / 70 * 20
     roundCount = math.floor(fillCount)
     block = '\u25a0'
     emptyBlock = '\u25a1'
