@@ -30,14 +30,14 @@ riot_dev_api = "RGAPI-c84aa054-6d1f-4943-8604-a000551e68e2"
 
 client = commands.Bot(command_prefix="$")
 
-fd = open("bot_token.txt", "r")
-bot_token = fd.read()
+# fd = open("bot_token.txt", "r")
+# bot_token = fd.read()
 
-# try:  
-#    bot_token=os.environ["bot_token"]
-# except KeyError: 
-#    print("Please set the environment variable bot_token")
-#    exit(1)
+try:  
+   bot_token=os.environ["bot_token"]
+except KeyError: 
+   print("Please set the environment variable bot_token")
+   exit(1)
 
 @client.event
 async def on_ready(pass_context = True):
@@ -882,7 +882,7 @@ async def ready(ctx):
 async def covid(ctx):
     print(str(ctx.message.author) +": $covid")
     result = casesinfo.mainCases()
-    await ctx.send("```" + result[0] +"\n" + result[1] + "```")
+    await ctx.send("```" + result[0] +"\n" + result[1] + "\n" + result[2] + "```")
 #=======================================
 #Kings cup
 #========================================
